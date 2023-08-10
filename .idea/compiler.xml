@@ -6,13 +6,15 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="spring-keestep-02" />
         <module name="spring-keestep-01" />
+        <module name="spring-keestep-03" />
+        <module name="spring-keestep-02" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="spring-keestep-01" target="1.8" />
       <module name="spring-keestep-02" target="1.8" />
+      <module name="spring-keestep-03" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

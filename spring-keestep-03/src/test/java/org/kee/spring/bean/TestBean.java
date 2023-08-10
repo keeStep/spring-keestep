@@ -1,4 +1,4 @@
-package org.kee.spring;
+package org.kee.spring.bean;
 
 /**
  * <p>

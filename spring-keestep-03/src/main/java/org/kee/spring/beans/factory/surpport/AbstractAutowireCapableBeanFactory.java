@@ -19,13 +19,8 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
     @Override
     protected Object createBean(String name, BeanDefinition beanDefinition, Object[] args) {
-        Object bean = null;
-        try {
-            // 1.实例化bean
-            bean = beanDefinition.getBeanClass().newInstance();
-        } catch (IllegalAccessException | InstantiationException e) {
-            throw new BeansException("Instantiation of bean failed", e);
-        }
+        // 1.实例化bean
+        Object bean = createBeanInstance(name, beanDefinition, args);
 
         // 2.注册单例bean
         addSingleton(name, bean);
