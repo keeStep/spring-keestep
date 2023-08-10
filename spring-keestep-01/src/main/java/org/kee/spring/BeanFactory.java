@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * <p>
+ * <p> 极简Bean注册与使用
  *
  * @author Eric
  * @date 2023/8/8 23:25
