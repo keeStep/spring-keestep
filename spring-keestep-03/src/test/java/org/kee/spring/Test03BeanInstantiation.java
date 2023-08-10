@@ -7,7 +7,7 @@ import org.kee.spring.beans.factory.config.BeanDefinition;
 import org.kee.spring.beans.factory.surpport.DefaultListableBeanFactory;
 
 /**
- * Unit test for simple App.
+ * 单元测试：Bean构造函数带入参
  */
 public class Test03BeanInstantiation {
     /**
