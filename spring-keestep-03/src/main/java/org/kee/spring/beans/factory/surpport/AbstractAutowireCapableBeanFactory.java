@@ -1,9 +1,11 @@
 package org.kee.spring.beans.factory.surpport;
 
+import cn.hutool.core.bean.BeanUtil;
 import org.kee.spring.beans.BeansException;
 import org.kee.spring.beans.PropertyValue;
 import org.kee.spring.beans.PropertyValues;
 import org.kee.spring.beans.factory.config.BeanDefinition;
+import org.kee.spring.beans.factory.config.BeanReference;
 import org.kee.spring.beans.factory.surpport.instantiation.CglibSubclassingInstantiationStrategy;
 import org.kee.spring.beans.factory.surpport.instantiation.InstantiationStrategy;
 
@@ -25,7 +27,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         Object bean = createBeanInstance(beanName, beanDefinition, args);
 
         // 2.为Bean填充属性
-        applyBeanProperty(beanName, beanDefinition, args);
+        applyBeanProperty(beanName, bean, beanDefinition);
 
         // 2.注册单例bean
         addSingleton(beanName, bean);
@@ -34,14 +36,30 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         return bean;
     }
 
-    private void applyBeanProperty(String beanName, BeanDefinition beanDefinition, Object[] args) {
+    /**
+     * 为Bean填充属性
+     * @param beanName
+     * @param bean
+     * @param beanDefinition
+     */
+    private void applyBeanProperty(String beanName, Object bean, BeanDefinition beanDefinition) {
         try {
             PropertyValues propertyValues = beanDefinition.getPropertyValues();
             for (PropertyValue propertyValue : propertyValues.getPropertyValues()) {
                 String name = propertyValue.getName();
                 Object value = propertyValue.getValue();
 
-//                if (value instanceof BeanR)
+                // 引用类型的属性值获取：getBean(beanName)
+                if (value instanceof BeanReference) {
+                    value = getBean(((BeanReference) value).getBeanName());
+                }
+
+                // 属性值填充：
+                /*
+                    方案1:反射
+                    方案2:工具类（此处重点不在反射，可直接使用hutool的工具类）
+                 */
+                BeanUtil.setFieldValue(bean, name, value);
             }
         } catch (Exception e) {
             throw new BeansException("Error setting property values: " + beanName);
