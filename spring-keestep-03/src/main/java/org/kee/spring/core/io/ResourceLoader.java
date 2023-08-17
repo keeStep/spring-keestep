@@ -1,7 +1,7 @@
 package org.kee.spring.core.io;
 
 /**
- * <p>
+ * <p> 资源加载器接口
  *
  * @author Eric
  * @date 2023/8/15 22:46

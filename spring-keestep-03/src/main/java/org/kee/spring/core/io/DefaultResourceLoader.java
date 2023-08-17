@@ -6,12 +6,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * <p>
+ * <p> 资源加载器
  *
  * @author Eric
  * @date 2023/8/15 23:06
  */
 public class DefaultResourceLoader implements ResourceLoader{
+
     @Override
     public Resource getResource(String location) {
         Assert.notNull("Location must not be null");
