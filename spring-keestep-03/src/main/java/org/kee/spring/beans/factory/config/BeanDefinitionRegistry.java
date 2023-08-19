@@ -9,4 +9,6 @@ package org.kee.spring.beans.factory.config;
 public interface BeanDefinitionRegistry {
 
     void registerBeanDefinition(String beanName, BeanDefinition definition);
+
+    boolean containsBeanDefinition(String beanName);
 }

@@ -1,13 +1,12 @@
-package org.kee.spring;
+package org.kee.spring.test;
 
 import org.junit.Test;
-import org.kee.spring.bean.TestBeanReference;
-import org.kee.spring.bean.TestBeanReferenceParent;
-import org.kee.spring.bean.TestParamBean;
 import org.kee.spring.beans.PropertyValue;
 import org.kee.spring.beans.PropertyValues;
 import org.kee.spring.beans.factory.config.BeanDefinition;
 import org.kee.spring.beans.factory.surpport.DefaultListableBeanFactory;
+import org.kee.spring.test.bean.TestBeanReference;
+import org.kee.spring.test.bean.TestBeanReferenceParent;
 
 /**
  * Unit test for simple App.
