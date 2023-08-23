@@ -98,23 +98,23 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
             // 4.属性填充
             for (int j = 0; j < bean.getChildNodes().getLength(); j++) {
                 // 4.1.过滤元素（Element）
-                if (!(childNodes.item(i) instanceof Element)) {
+                if (!(bean.getChildNodes().item(j) instanceof Element)) {
                     continue;
                 }
 
                 // 4.2.过滤节点（property）
-                if (!"property".equals(childNodes.item(i).getNodeName())) {
+                if (!"property".equals(bean.getChildNodes().item(j).getNodeName())) {
                     continue;
                 }
 
                 // 4.3.解析 property 标签
-                Element property = (Element) childNodes.item(i);
+                Element property = (Element) bean.getChildNodes().item(j);
                 String attrName = property.getAttribute("name");
                 String attrValue = property.getAttribute("value");
                 String attrRef = property.getAttribute("ref");
 
                 // 4.4.引用类型的属性
-                Object value = StrUtil.isBlank(attrRef) ? new BeanReference(attrRef) : attrValue;
+                Object value = StrUtil.isNotBlank(attrRef) ? new BeanReference(attrRef) : attrValue;
 
                 // 4.5.构建属性对象
                 PropertyValue propertyValue = new PropertyValue(attrName, value);

@@ -7,6 +7,7 @@ import org.kee.spring.beans.factory.surpport.DefaultListableBeanFactory;
 import org.kee.spring.beans.factory.xml.XmlBeanDefinitionReader;
 import org.kee.spring.core.io.DefaultResourceLoader;
 import org.kee.spring.core.io.Resource;
+import org.kee.spring.test.bean.TestBeanReferenceParent;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,7 +43,7 @@ public class Test05AutoWireBean {
 
     @Test
     public void Test05ResourceLoaderUrl() throws IOException {
-        Resource resource = resourceLoader.getResource("classpath:important.properties");
+        Resource resource = resourceLoader.getResource("https://gitee.com/xiaoym/knife4j/blob/dev/knife4j-doc/package.json");
         InputStream inputStream = resource.getInputStream();
         String s = IoUtil.readUtf8(inputStream);
         System.out.println(s);
@@ -50,8 +51,7 @@ public class Test05AutoWireBean {
 
 
     @Test
-    public void Test05AutoWireBean() {
-        // TODO 创建文件 spring.xml
+    public void Test05AutoRegisterBean() {
         // 1.初始化 BeanFactory
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 
@@ -59,6 +59,8 @@ public class Test05AutoWireBean {
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
         reader.loadBeanDefinitions("classpath:spring.xml");
 
-        // 3. TODO 获取Bean对象调用方法
+        // 3. 获取Bean对象调用方法
+        TestBeanReferenceParent testBean = (TestBeanReferenceParent) beanFactory.getBean("testBeanReferenceParent");
+        System.out.println("获取的城市名称：" + testBean.queryCityName());;
     }
 }
