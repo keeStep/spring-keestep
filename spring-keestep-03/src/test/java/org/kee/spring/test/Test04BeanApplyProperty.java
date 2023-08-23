@@ -37,6 +37,6 @@ public class Test04BeanApplyProperty {
         TestBeanReferenceParent testBean = (TestBeanReferenceParent) beanFactory.getBean("testBeanReferenceParent");
 
         // 5.执行bean方法
-        System.out.println("获取的城市名称：" + testBean.queryCityName());;
+        System.out.println("获取的城市名称：" + testBean.queryCityName());
     }
 }

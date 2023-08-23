@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans>
+    <bean id="testBeanReference" class="org.kee.spring.test.bean.TestBeanReference"/>
+    <bean id="testBeanReferenceParent" class="org.kee.spring.test.bean.TestBeanReferenceParent">
+        <property name="cityCode" value="XIY"/>
+        <property name="testBeanReference" ref="testBeanReference"/>
+    </bean>
+</beans>
