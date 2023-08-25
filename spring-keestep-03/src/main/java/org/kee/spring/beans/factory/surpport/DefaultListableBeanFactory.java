@@ -1,10 +1,8 @@
 package org.kee.spring.beans.factory.surpport;
 
 import org.kee.spring.beans.BeansException;
-import org.kee.spring.beans.factory.ConfigurableBeanFactory;
 import org.kee.spring.beans.factory.ConfigurableListableBeanFactory;
 import org.kee.spring.beans.factory.config.BeanDefinition;
-import org.kee.spring.beans.factory.config.BeanDefinitionRegistry;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +10,7 @@ import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * <p>
+ * <p> BeanFactory 核心实现类
  *
  * @author Eric
  * @date 2023/8/9 0:13
@@ -57,5 +55,10 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
     @Override
     public String[] getBeanDefinitionNames() {
         return beanDefinitionMap.keySet().toArray(new String[0]);
+    }
+
+    @Override
+    public void preInstantiateSingletons() throws BeansException {
+        beanDefinitionMap.keySet().forEach(this::getBean);
     }
 }

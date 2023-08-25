@@ -1,12 +1,11 @@
 package org.kee.spring.beans.factory.xml;
 
-import cn.hutool.core.bean.BeanException;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.XmlUtil;
 import org.kee.spring.beans.BeansException;
 import org.kee.spring.beans.PropertyValue;
 import org.kee.spring.beans.factory.config.BeanDefinition;
-import org.kee.spring.beans.factory.config.BeanDefinitionRegistry;
+import org.kee.spring.beans.factory.surpport.BeanDefinitionRegistry;
 import org.kee.spring.beans.factory.config.BeanReference;
 import org.kee.spring.beans.factory.surpport.AbstractBeanDefinitionReader;
 import org.kee.spring.core.io.Resource;
@@ -35,24 +34,31 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
     }
 
     @Override
-    public void loadBeanDefinitions(String location) throws BeanException {
+    public void loadBeanDefinitions(String location) throws BeansException {
         ResourceLoader resourceLoader = getResourceLoader();
         Resource resource = resourceLoader.getResource(location);
         loadBeanDefinitions(resource);
     }
 
     @Override
-    public void loadBeanDefinitions(Resource resource) throws BeanException {
+    public void loadBeanDefinitions(String[] locations) throws BeansException {
+        for (String location : locations) {
+            loadBeanDefinitions(location);
+        }
+    }
+
+    @Override
+    public void loadBeanDefinitions(Resource resource) throws BeansException {
         try (InputStream inputStream = resource.getInputStream()) {
             doLoadBeanDefinition(inputStream);
         } catch (IOException | ClassNotFoundException e) {
-            throw new BeanException("IOException parsing XML document from " + resource, e);
+            throw new BeansException("IOException parsing XML document from " + resource, e);
         }
 
     }
 
     @Override
-    public void loadBeanDefinitions(Resource... resources) throws BeanException {
+    public void loadBeanDefinitions(Resource... resources) throws BeansException {
         for (Resource resource : resources) {
             loadBeanDefinitions(resource);
         }

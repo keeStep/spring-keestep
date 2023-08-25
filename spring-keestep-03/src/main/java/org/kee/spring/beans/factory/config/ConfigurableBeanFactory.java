@@ -1,5 +1,8 @@
-package org.kee.spring.beans.factory;
+package org.kee.spring.beans.factory.config;
 
+import org.kee.spring.beans.factory.BeanFactory;
+import org.kee.spring.beans.factory.HierarchicalBeanFactory;
+import org.kee.spring.beans.factory.config.BeanPostProcessor;
 import org.kee.spring.beans.factory.config.SingletonBeanRegistry;
 
 /**
@@ -12,4 +15,6 @@ import org.kee.spring.beans.factory.config.SingletonBeanRegistry;
  * @date 2023/8/22 22:52
  */
 public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, SingletonBeanRegistry {
+
+    void addBeanPostProcessor(BeanPostProcessor beanPostProcessor);
 }
