@@ -1,6 +1,5 @@
 package org.kee.spring.beans.factory.surpport;
 
-import org.kee.spring.beans.factory.config.BeanDefinitionRegistry;
 import org.kee.spring.core.io.DefaultResourceLoader;
 import org.kee.spring.core.io.ResourceLoader;
 

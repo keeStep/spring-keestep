@@ -1,4 +1,6 @@
-package org.kee.spring.beans.factory;
+package org.kee.spring.beans.factory.config;
+
+import org.kee.spring.beans.factory.BeanFactory;
 
 /**
  * Extension of the {@link BeanFactory}

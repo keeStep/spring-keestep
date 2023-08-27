@@ -1,9 +1,9 @@
 package org.kee.spring.beans.factory.surpport;
 
-import cn.hutool.core.bean.BeanUtil;
 import org.kee.spring.beans.BeansException;
 import org.kee.spring.beans.PropertyValue;
 import org.kee.spring.beans.PropertyValues;
+import org.kee.spring.beans.factory.config.AutowireCapableBeanFactory;
 import org.kee.spring.beans.factory.config.BeanDefinition;
 import org.kee.spring.beans.factory.config.BeanReference;
 import org.kee.spring.beans.factory.surpport.instantiation.CglibSubclassingInstantiationStrategy;
@@ -17,7 +17,7 @@ import java.lang.reflect.Constructor;
  * @author Eric
  * @date 2023/8/9 0:09
  */
-public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFactory {
+public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFactory implements AutowireCapableBeanFactory {
 
     private InstantiationStrategy instantiationStrategy = new CglibSubclassingInstantiationStrategy();
 
@@ -92,4 +92,6 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
     public void setInstantiationStrategy(InstantiationStrategy instantiationStrategy) {
         this.instantiationStrategy = instantiationStrategy;
     }
+
+
 }

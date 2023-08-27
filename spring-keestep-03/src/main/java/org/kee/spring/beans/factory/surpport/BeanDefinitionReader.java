@@ -1,7 +1,6 @@
 package org.kee.spring.beans.factory.surpport;
 
-import cn.hutool.core.bean.BeanException;
-import org.kee.spring.beans.factory.config.BeanDefinitionRegistry;
+import org.kee.spring.beans.BeansException;
 import org.kee.spring.core.io.Resource;
 import org.kee.spring.core.io.ResourceLoader;
 
@@ -17,7 +16,8 @@ public interface BeanDefinitionReader {
 
     ResourceLoader getResourceLoader();
 
-    void loadBeanDefinitions(String location) throws BeanException;
-    void loadBeanDefinitions(Resource resource) throws BeanException;
-    void loadBeanDefinitions(Resource... resources) throws BeanException;
+    void loadBeanDefinitions(String location) throws BeansException;
+    void loadBeanDefinitions(String[] locations) throws BeansException;
+    void loadBeanDefinitions(Resource resource) throws BeansException;
+    void loadBeanDefinitions(Resource... resources) throws BeansException;
 }
