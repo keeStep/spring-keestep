@@ -15,7 +15,6 @@ import java.util.Map;
  *
  * 使用模版方法模式，需要具体的子类来实现抽象方法
  * 继承 DefaultResourceLoader 具备资源加载能力
- *
  * @author Eric
  * @date 2023/8/25 23:46
  */
