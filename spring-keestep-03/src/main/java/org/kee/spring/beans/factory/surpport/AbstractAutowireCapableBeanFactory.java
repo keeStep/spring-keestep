@@ -1,10 +1,12 @@
 package org.kee.spring.beans.factory.surpport;
 
+import cn.hutool.core.bean.BeanUtil;
 import org.kee.spring.beans.BeansException;
 import org.kee.spring.beans.PropertyValue;
 import org.kee.spring.beans.PropertyValues;
 import org.kee.spring.beans.factory.config.AutowireCapableBeanFactory;
 import org.kee.spring.beans.factory.config.BeanDefinition;
+import org.kee.spring.beans.factory.config.BeanPostProcessor;
 import org.kee.spring.beans.factory.config.BeanReference;
 import org.kee.spring.beans.factory.surpport.instantiation.CglibSubclassingInstantiationStrategy;
 import org.kee.spring.beans.factory.surpport.instantiation.InstantiationStrategy;
@@ -22,18 +24,43 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
     private InstantiationStrategy instantiationStrategy = new CglibSubclassingInstantiationStrategy();
 
     @Override
-    protected Object createBean(String beanName, BeanDefinition beanDefinition, Object[] args) {
-        // 1.实例化bean
-        Object bean = createBeanInstance(beanName, beanDefinition, args);
+    protected Object createBean(String beanName, BeanDefinition beanDefinition, Object[] args) throws BeansException {
 
-        // 2.为Bean填充属性
-        applyBeanProperty(beanName, bean, beanDefinition);
+        Object bean = null;
+        try {
+            // 1.实例化bean
+            bean = createBeanInstance(beanName, beanDefinition, args);
+
+            // 2.为Bean填充属性
+            applyBeanProperty(beanName, bean, beanDefinition);
+
+            // 3.执行 Bean 的初始化方法及其前后的 BeanPostProcessor
+            bean = initializeBean(beanName, bean, beanDefinition);
+        } catch (Exception e) {
+            throw new BeansException("Instantiation of bean failed", e);
+        }
 
         // 2.注册单例bean
-        addSingleton(beanName, bean);
+        registerSingleton(beanName, bean);
 
         // 3.返回bean
         return bean;
+    }
+
+    private Object initializeBean(String beanName, Object bean, BeanDefinition beanDefinition) {
+        // 1.BeanPostProcessor Before
+        Object wrappedBean = applyBeanPostProcessorBeforeInitialization(bean, beanName);
+
+        // 2.initMethod TODO
+        invokeInitMethods(beanName, wrappedBean, beanDefinition);
+
+        // 3.BeanPostProcessor After
+        wrappedBean = applyBeanPostProcessorAfterInitialization(bean, beanName);
+        return wrappedBean;
+    }
+
+    private void invokeInitMethods(String beanName, Object wrappedBean, BeanDefinition beanDefinition) {
+
     }
 
     /**
@@ -93,5 +120,31 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         this.instantiationStrategy = instantiationStrategy;
     }
 
+    @Override
+    public Object applyBeanPostProcessorBeforeInitialization(Object existingBean, String beanName) throws BeansException {
+        Object result = existingBean;
+        for (BeanPostProcessor beanPostProcessor : getBeanPostProcessors()) {
+            Object current = beanPostProcessor.postProcessBeforeInitialization(result, beanName);
+            if (null == current) {
+                return result;
+            }
 
+            result = current;
+        }
+        return result;
+    }
+
+    @Override
+    public Object applyBeanPostProcessorAfterInitialization(Object existingBean, String beanName) throws BeansException {
+        Object result = existingBean;
+        for (BeanPostProcessor beanPostProcessor : getBeanPostProcessors()) {
+            Object current = beanPostProcessor.postProcessAfterInitialization(result, beanName);
+            if (null == current) {
+                return result;
+            }
+
+            result = current;
+        }
+        return result;
+    }
 }

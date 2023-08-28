@@ -34,7 +34,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader i
         // ---- 本抽象类实现
         invokeBeanFactoryPostProcessors(beanFactory);
 
-        // 4.注册 BeanPostProcessor (Bean实例化前注册，便于初始化的时候执行)
+        // 4.注册 BeanPostProcessor (Bean实例化前注册，便于初始化的时候执行())
         // ---- 本抽象类实现
         registerBeanPostProcessors(beanFactory);
 
