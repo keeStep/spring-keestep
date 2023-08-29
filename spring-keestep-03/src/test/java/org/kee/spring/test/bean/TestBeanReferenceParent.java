@@ -10,11 +10,15 @@ public class TestBeanReferenceParent {
 
     private String cityCode;
 
+    private String cityName;
+
+    private String location;
+
     private TestBeanReference testBeanReference;
 
 
-    public String queryCityName() {
-        return testBeanReference.getCityName(cityCode);
+    public String queryCityInfo() {
+        return testBeanReference.getCityName(cityCode) + ", " + cityName + ", " + location;
     }
 
     public TestBeanReference getTestBeanReference() {
@@ -31,5 +35,21 @@ public class TestBeanReferenceParent {
 
     public void setCityCode(String cityCode) {
         this.cityCode = cityCode;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 }

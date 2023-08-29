@@ -2,6 +2,7 @@ package org.kee.spring.beans.factory;
 
 import org.kee.spring.beans.BeansException;
 import org.kee.spring.beans.factory.config.AutowireCapableBeanFactory;
+import org.kee.spring.beans.factory.config.BeanDefinition;
 import org.kee.spring.beans.factory.config.ConfigurableBeanFactory;
 
 /**
@@ -15,4 +16,6 @@ import org.kee.spring.beans.factory.config.ConfigurableBeanFactory;
 public interface ConfigurableListableBeanFactory extends ConfigurableBeanFactory, AutowireCapableBeanFactory,ListableBeanFactory {
 
     void preInstantiateSingletons() throws BeansException;
+
+    BeanDefinition getBeanDefinition(String beanName) throws BeansException;
 }

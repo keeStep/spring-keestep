@@ -20,7 +20,7 @@ public class DefaultSingletonBeanRegistry implements SingletonBeanRegistry {
         return singletonBeans.get(beanName);
     }
 
-    protected void addSingleton(String beanName, Object singletonBean) {
+    protected void registerSingleton(String beanName, Object singletonBean) {
         singletonBeans.put(beanName, singletonBean);
     }
 }

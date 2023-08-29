@@ -13,11 +13,7 @@ import org.kee.spring.beans.factory.ConfigurableListableBeanFactory;
 public interface BeanFactoryPostProcessor {
 
     /**
-<<<<<<< HEAD
      * 在所有的 BeanDefinition 加载完成后，且将 Bean 对象实例化之前，提供修改 BeanDefinition 属性的机制
-=======
-     * 在所有的 BeanDefinition 加载完成后，且将 Bean 对象实例化之后，提供修改 BeanDefinition 属性的机制
->>>>>>> 81d962cadf815ca3f0e62ad0dc2384857d23dadb
      * @param beanFactory
      * @throws BeansException
      */
