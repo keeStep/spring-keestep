@@ -7,4 +7,7 @@
         <property name="location" value="陕西省关中大院"/>
         <property name="testBeanReference" ref="testBeanReference"/>
     </bean>
+
+    <bean id="keeBeanFactoryPostProcessor" class="org.kee.spring.test.common.KeeBeanFactoryPostProcessor"/>
+    <bean id="keeBeanPostProcessor" class="org.kee.spring.test.common.KeeBeanPostProcessor"/>
 </beans>

@@ -20,7 +20,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
     private final Map<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>();
 
     @Override
-    protected BeanDefinition getBeanDefinition(String name) throws BeansException {
+    public BeanDefinition getBeanDefinition(String name) throws BeansException {
         BeanDefinition beanDefinition = beanDefinitionMap.get(name);
         if (Objects.isNull(beanDefinition)) {
             throw new BeansException("No bean named '" + name + "' is defined");

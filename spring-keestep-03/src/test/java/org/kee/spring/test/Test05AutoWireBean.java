@@ -61,6 +61,6 @@ public class Test05AutoWireBean {
 
         // 3. 获取Bean对象调用方法
         TestBeanReferenceParent testBean = (TestBeanReferenceParent) beanFactory.getBean("testBeanReferenceParent");
-        System.out.println("获取的城市名称：" + testBean.queryCityName());;
+        System.out.println("获取的城市名称：" + testBean.queryCityInfo());;
     }
 }
