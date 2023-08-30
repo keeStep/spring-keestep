@@ -51,15 +51,29 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         // 1.BeanPostProcessor Before
         Object wrappedBean = applyBeanPostProcessorBeforeInitialization(bean, beanName);
 
-        // 2.initMethod TODO
-        invokeInitMethods(beanName, wrappedBean, beanDefinition);
+        // 2.initMethod
+        try {
+            invokeInitMethods(beanName, wrappedBean, beanDefinition);
+        } catch (Exception e) {
+            throw new BeansException("Invocation of init method of bean[" + beanName + "] failed", e);
+        }
 
         // 3.BeanPostProcessor After
         wrappedBean = applyBeanPostProcessorAfterInitialization(bean, beanName);
         return wrappedBean;
     }
 
-    private void invokeInitMethods(String beanName, Object wrappedBean, BeanDefinition beanDefinition) {
+    /**
+     * TODO invokeInitMethods
+     * @param beanName
+     * @param wrappedBean
+     * @param beanDefinition
+     * @throws BeansException
+     */
+    private void invokeInitMethods(String beanName, Object wrappedBean, BeanDefinition beanDefinition) throws BeansException {
+        // 两种来源的初始化方法都需要执行：
+        // -- 1.实现 InitializingBean 的 afterPropertiesSet 方法
+        // -- 2.配置文件的 init-method 属性配置的初始化方法
 
     }
 
