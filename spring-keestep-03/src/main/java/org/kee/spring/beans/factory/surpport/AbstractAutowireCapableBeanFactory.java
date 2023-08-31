@@ -5,6 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import org.kee.spring.beans.BeansException;
 import org.kee.spring.beans.PropertyValue;
 import org.kee.spring.beans.PropertyValues;
+import org.kee.spring.beans.factory.DisposableBean;
 import org.kee.spring.beans.factory.InitializingBean;
 import org.kee.spring.beans.factory.config.AutowireCapableBeanFactory;
 import org.kee.spring.beans.factory.config.BeanDefinition;
@@ -43,13 +44,35 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
             throw new BeansException("Instantiation of bean failed", e);
         }
 
-        // 2.注册单例bean
+        // 4.注册实现了 DisposableBean 接口的 Bean对象
+        registerDisposableBeanIfNecessary(beanName, bean, beanDefinition);
+
+        // 5.注册单例bean
         registerSingleton(beanName, bean);
 
-        // 3.返回bean
+        // 6.返回bean
         return bean;
     }
 
+    /**
+     * 注册实现了 DisposableBean 接口的 Bean对象
+     * @param beanName
+     * @param bean
+     * @param beanDefinition
+     */
+    protected void registerDisposableBeanIfNecessary(String beanName, Object bean, BeanDefinition beanDefinition) {
+        if (bean instanceof DisposableBean || StrUtil.isNotBlank(beanDefinition.getDestroyMethodName())) {
+            registerDisposableBean(beanName, new DisposableBeanAdapter(bean, beanName, beanDefinition));
+        }
+    }
+
+    /**
+     * 执行 Bean 的初始化方法及其前后的 BeanPostProcessor
+     * @param beanName
+     * @param bean
+     * @param beanDefinition
+     * @return
+     */
     private Object initializeBean(String beanName, Object bean, BeanDefinition beanDefinition) {
         // 1.BeanPostProcessor Before
         Object wrappedBean = applyBeanPostProcessorBeforeInitialization(bean, beanName);
