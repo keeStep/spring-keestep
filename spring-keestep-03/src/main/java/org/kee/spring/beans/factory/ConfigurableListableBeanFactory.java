@@ -13,9 +13,14 @@ import org.kee.spring.beans.factory.config.ConfigurableBeanFactory;
  * @author Eric
  * @date 2023/8/22 22:54
  */
-public interface ConfigurableListableBeanFactory extends ConfigurableBeanFactory, AutowireCapableBeanFactory,ListableBeanFactory {
+public interface ConfigurableListableBeanFactory extends ConfigurableBeanFactory, AutowireCapableBeanFactory, ListableBeanFactory {
 
     void preInstantiateSingletons() throws BeansException;
 
     BeanDefinition getBeanDefinition(String beanName) throws BeansException;
+
+    /**
+     * 销毁单例对象
+     */
+    void destroySingletons();
 }
