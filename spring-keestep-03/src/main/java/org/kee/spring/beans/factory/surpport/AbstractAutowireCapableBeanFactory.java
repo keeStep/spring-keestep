@@ -1,9 +1,11 @@
 package org.kee.spring.beans.factory.surpport;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.StrUtil;
 import org.kee.spring.beans.BeansException;
 import org.kee.spring.beans.PropertyValue;
 import org.kee.spring.beans.PropertyValues;
+import org.kee.spring.beans.factory.InitializingBean;
 import org.kee.spring.beans.factory.config.AutowireCapableBeanFactory;
 import org.kee.spring.beans.factory.config.BeanDefinition;
 import org.kee.spring.beans.factory.config.BeanPostProcessor;
@@ -12,6 +14,7 @@ import org.kee.spring.beans.factory.surpport.instantiation.CglibSubclassingInsta
 import org.kee.spring.beans.factory.surpport.instantiation.InstantiationStrategy;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 
 /**
  * <p>
@@ -64,16 +67,30 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
     }
 
     /**
-     * TODO invokeInitMethods
+     * invokeInitMethods
      * @param beanName
-     * @param wrappedBean
+     * @param bean
      * @param beanDefinition
      * @throws BeansException
      */
-    private void invokeInitMethods(String beanName, Object wrappedBean, BeanDefinition beanDefinition) throws BeansException {
+    private void invokeInitMethods(String beanName, Object bean, BeanDefinition beanDefinition) throws Exception {
         // 两种来源的初始化方法都需要执行：
         // -- 1.实现 InitializingBean 的 afterPropertiesSet 方法
+        if (bean instanceof InitializingBean) {
+            ((InitializingBean) bean).afterPropertiesSet();
+        }
+
         // -- 2.配置文件的 init-method 属性配置的初始化方法
+        String initMethodName = beanDefinition.getInitMethodName();
+        if (StrUtil.isNotBlank(initMethodName)) {
+            Method method = beanDefinition.getBeanClass().getMethod(initMethodName);
+            if (null == method) {
+                throw new BeansException("Could not find an init method named '" + initMethodName + "' on bean with name '"
+                + beanName + "'");
+            }
+
+            method.invoke(bean);
+        }
 
     }
 

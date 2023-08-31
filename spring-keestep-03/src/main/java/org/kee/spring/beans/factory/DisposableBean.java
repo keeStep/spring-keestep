@@ -1,7 +1,5 @@
 package org.kee.spring.beans.factory;
 
-import org.kee.spring.beans.BeansException;
-
 /**
  * <p>
  *
@@ -10,5 +8,5 @@ import org.kee.spring.beans.BeansException;
  */
 public interface DisposableBean {
 
-    void destroy() throws BeansException;
+    void destroy() throws Exception ;
 }
