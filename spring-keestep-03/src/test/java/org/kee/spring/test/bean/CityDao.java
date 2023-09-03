@@ -14,14 +14,14 @@ public class CityDao {
     private static Map<String,String> hashMap = new HashMap<>();
 
     public void initDataMethod() {
-        System.out.println("执行 initDataMethod");
+        System.out.println("^^^^^^^^ 执行：CityDao.initDataMethod()");
         hashMap.put("XIY", "西安市");
         hashMap.put("SZX", "深圳市");
         hashMap.put("PKG", "北京市");
     }
 
     public void destroyDataMethod() {
-        System.out.println("执行 destroyDataMethod");
+        System.out.println("^^^^^^^^ 执行：CityDao.destroyDataMethod()");
         hashMap.clear();
     }
 

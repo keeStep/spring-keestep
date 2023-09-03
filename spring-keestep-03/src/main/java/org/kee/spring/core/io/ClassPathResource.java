@@ -2,6 +2,7 @@ package org.kee.spring.core.io;
 
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.ClassUtil;
+import org.kee.spring.util.ClassUtils;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -27,7 +28,7 @@ public class ClassPathResource implements Resource {
     public ClassPathResource(String path, ClassLoader classLoader) {
         Assert.notNull(path, "Path must not be null");
         this.path = path;
-        this.classLoader = classLoader != null ? classLoader : ClassUtil.getClassLoader() ;
+        this.classLoader = classLoader != null ? classLoader : ClassUtils.getDefaultClassLoader();
     }
 
     @Override
