@@ -1,10 +1,10 @@
 package org.kee.spring.beans.factory.surpport;
 
 import org.kee.spring.beans.BeansException;
-import org.kee.spring.beans.factory.BeanFactory;
 import org.kee.spring.beans.factory.config.BeanDefinition;
 import org.kee.spring.beans.factory.config.BeanPostProcessor;
 import org.kee.spring.beans.factory.config.ConfigurableBeanFactory;
+import org.kee.spring.util.ClassUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +17,8 @@ import java.util.Objects;
  * @date 2023/8/9 0:01
  */
 public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry implements ConfigurableBeanFactory {
+
+    private ClassLoader beanClassLoader = ClassUtils.getDefaultClassLoader();
 
     private final List<BeanPostProcessor> beanPostProcessors = new ArrayList<>();
 
@@ -51,6 +53,7 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
 
     /**
      * 获取bean定义，由 beanFactory核心类：DefaultListableBeanFactory 实现
+     *
      * @param name
      * @return
      */
@@ -58,6 +61,7 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
 
     /**
      * 创建bean, 由 AbstractAutowireCapableBeanFactory 实现
+     *
      * @param name
      * @param beanDefinition
      * @return
@@ -66,7 +70,6 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
 
 
     // BeanPostProcessor
-
     @Override
     public void addBeanPostProcessor(BeanPostProcessor beanPostProcessor) {
         this.beanPostProcessors.remove(beanPostProcessor);
@@ -75,5 +78,11 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
 
     public List<BeanPostProcessor> getBeanPostProcessors() {
         return this.beanPostProcessors;
+    }
+
+
+    // BeanClassLoader
+    public ClassLoader getBeanClassLoader() {
+        return beanClassLoader;
     }
 }

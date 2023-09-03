@@ -7,6 +7,10 @@ import org.kee.spring.beans.PropertyValue;
 import org.kee.spring.beans.PropertyValues;
 import org.kee.spring.beans.factory.DisposableBean;
 import org.kee.spring.beans.factory.InitializingBean;
+import org.kee.spring.beans.factory.aware.Aware;
+import org.kee.spring.beans.factory.aware.BeanClassLoaderAware;
+import org.kee.spring.beans.factory.aware.BeanFactoryAware;
+import org.kee.spring.beans.factory.aware.BeanNameAware;
 import org.kee.spring.beans.factory.config.AutowireCapableBeanFactory;
 import org.kee.spring.beans.factory.config.BeanDefinition;
 import org.kee.spring.beans.factory.config.BeanPostProcessor;
@@ -38,7 +42,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
             // 2.为Bean填充属性
             applyBeanProperty(beanName, bean, beanDefinition);
 
-            // 3.执行 Bean 的初始化方法及其前后的 BeanPostProcessor
+            // 3.执行 Bean 的初始化方法及(其前后的 BeanPostProcessor, aware容器感知)
             bean = initializeBean(beanName, bean, beanDefinition);
         } catch (Exception e) {
             throw new BeansException("Instantiation of bean failed", e);
@@ -74,19 +78,36 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
      * @return
      */
     private Object initializeBean(String beanName, Object bean, BeanDefinition beanDefinition) {
-        // 1.BeanPostProcessor Before
+        // 1.invokeAwareMethods
+        invokeAwareMethods(beanName, bean);
+
+        // 2.BeanPostProcessor Before
         Object wrappedBean = applyBeanPostProcessorBeforeInitialization(bean, beanName);
 
-        // 2.initMethod
+        // 3.invokeInitMethods
         try {
             invokeInitMethods(beanName, wrappedBean, beanDefinition);
         } catch (Exception e) {
             throw new BeansException("Invocation of init method of bean[" + beanName + "] failed", e);
         }
 
-        // 3.BeanPostProcessor After
+        // 4.BeanPostProcessor After
         wrappedBean = applyBeanPostProcessorAfterInitialization(bean, beanName);
         return wrappedBean;
+    }
+
+    private void invokeAwareMethods(String beanName, Object bean) {
+        if (bean instanceof Aware) {
+            if (bean instanceof BeanFactoryAware) {
+                ((BeanFactoryAware) bean).setBeanFactory(this);
+            }
+            if (bean instanceof BeanNameAware) {
+                ((BeanNameAware) bean).setBeanName(beanName);
+            }
+            if (bean instanceof BeanClassLoaderAware) {
+                ((BeanClassLoaderAware) bean).setBeanClassLoader(getBeanClassLoader());
+            }
+        }
     }
 
     /**
