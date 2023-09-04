@@ -12,6 +12,13 @@ import java.util.Objects;
  */
 public class BeanDefinition {
 
+    String SCOPE_SINGLETON = ConfigurableBeanFactory.SCOPE_SINGLETON;
+    String SCOPE_PROTOTYPE = ConfigurableBeanFactory.SCOPE_PROTOTYPE;
+
+    private boolean singleton = true;
+    private boolean prototype = false;
+    private String scope = SCOPE_SINGLETON;
+
     private Class beanClass;
     private PropertyValues propertyValues;
     private String initMethodName;
@@ -25,6 +32,30 @@ public class BeanDefinition {
     public BeanDefinition(Class beanClass, PropertyValues propertyValues) {
         this.beanClass = beanClass;
         this.propertyValues = Objects.nonNull(propertyValues) ? propertyValues : new PropertyValues();
+    }
+
+    public boolean isSingleton() {
+        return singleton;
+    }
+
+    public void setSingleton(boolean singleton) {
+        this.singleton = singleton;
+    }
+
+    public boolean isPrototype() {
+        return prototype;
+    }
+
+    public void setPrototype(boolean prototype) {
+        this.prototype = prototype;
+    }
+
+    public String getScope() {
+        return scope;
+    }
+
+    public void setScope(String scope) {
+        this.scope = scope;
     }
 
     public Class getBeanClass() {
