@@ -19,8 +19,4 @@ public interface ConfigurableListableBeanFactory extends ConfigurableBeanFactory
 
     BeanDefinition getBeanDefinition(String beanName) throws BeansException;
 
-    /**
-     * 销毁单例对象
-     */
-    void destroySingletons();
 }

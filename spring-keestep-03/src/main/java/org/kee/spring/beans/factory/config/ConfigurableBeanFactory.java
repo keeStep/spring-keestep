@@ -16,5 +16,17 @@ import org.kee.spring.beans.factory.config.SingletonBeanRegistry;
  */
 public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, SingletonBeanRegistry {
 
+    String SCOPE_SINGLETON = "singleton";
+    String SCOPE_PROTOTYPE = "prototype";
+
+    /**
+     * 添加 BeanPostProcessor
+     * @param beanPostProcessor
+     */
     void addBeanPostProcessor(BeanPostProcessor beanPostProcessor);
+
+    /**
+     * 销毁单例对象
+     */
+    void destroySingletons();
 }

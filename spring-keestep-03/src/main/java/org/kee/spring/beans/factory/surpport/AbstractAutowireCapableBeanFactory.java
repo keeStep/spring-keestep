@@ -52,7 +52,9 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         registerDisposableBeanIfNecessary(beanName, bean, beanDefinition);
 
         // 5.注册单例bean
-        registerSingleton(beanName, bean);
+        if (beanDefinition.isSingleton()) {
+            registerSingleton(beanName, bean);
+        }
 
         // 6.返回bean
         return bean;
@@ -65,6 +67,11 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
      * @param beanDefinition
      */
     protected void registerDisposableBeanIfNecessary(String beanName, Object bean, BeanDefinition beanDefinition) {
+        // 非 Singleton 类型的 Bean 对象不必执行销毁 TODO 为什么？
+        if (!beanDefinition.isSingleton()) {
+            return;
+        }
+
         if (bean instanceof DisposableBean || StrUtil.isNotBlank(beanDefinition.getDestroyMethodName())) {
             registerDisposableBean(beanName, new DisposableBeanAdapter(bean, beanName, beanDefinition));
         }

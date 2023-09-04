@@ -1,6 +1,7 @@
 package org.kee.spring.beans.factory.surpport;
 
 import org.kee.spring.beans.BeansException;
+import org.kee.spring.beans.factory.FactoryBean;
 import org.kee.spring.beans.factory.config.BeanDefinition;
 import org.kee.spring.beans.factory.config.BeanPostProcessor;
 import org.kee.spring.beans.factory.config.ConfigurableBeanFactory;
@@ -16,7 +17,7 @@ import java.util.Objects;
  * @author Eric
  * @date 2023/8/9 0:01
  */
-public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry implements ConfigurableBeanFactory {
+public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport implements ConfigurableBeanFactory {
 
     private ClassLoader beanClassLoader = ClassUtils.getDefaultClassLoader();
 
@@ -41,14 +42,32 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
         // 1.先从缓存获取
         Object bean = getSingleton(name);
         if (Objects.nonNull(bean)) {
-            return (T) bean;
+            // 如果是 FactoryBean ，则还需要调用 FactoryBean#getObject
+            // 【即：通过工厂容器（FactoryBean）获取name对应的对象bean】
+            // FIXME 问题：为什么一路下来 FactoryBean 的 beanName 和 需要获取的 Object 的 beanName 一样？
+            return (T) getObjectForBeanInstance(bean, name);
         }
 
         // 2.缓存没有则注册并获取
         // 2.1.获取bean定义
         BeanDefinition beanDefinition = getBeanDefinition(name);
         // 2.2.创建bean
-        return (T) createBean(name, beanDefinition, args);
+        Object bean1 = createBean(name, beanDefinition, args);
+        return (T) getObjectForBeanInstance(bean1, name);
+    }
+
+    private Object getObjectForBeanInstance(Object bean, String name) {
+        if (!(bean instanceof FactoryBean)) {
+            return bean;
+        }
+
+        Object object = getCachedObjectForFactoryBean(name);
+
+        if (Objects.isNull(object)) {
+            FactoryBean<?> factoryBean = (FactoryBean<?>) bean;
+            object = getObjectFromFactoryBean(factoryBean, name);
+        }
+        return object;
     }
 
     /**
