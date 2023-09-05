@@ -26,19 +26,29 @@ public class CityService implements InitializingBean, DisposableBean, BeanNameAw
     private String cityCode;
     private String cityName;
     private String location;
-    private CityDao cityDao;
+//    private CityDao cityDao;
+    private CityMapper cityMapper;
 
 
     public String queryCityInfo() {
-        return cityDao.getCityName(cityCode) + ", " + cityName + ", " + location;
+        return cityMapper.getCityName(cityCode) + ", " + cityName + ", " + location;
+    }
+//
+//    public CityMapper getCityDao() {
+//        return cityDao;
+//    }
+//
+//    public void setCityDao(CityMapper cityDao) {
+//        this.cityDao = cityDao;
+//    }
+
+
+    public CityMapper getCityMapper() {
+        return cityMapper;
     }
 
-    public CityDao getCityDao() {
-        return cityDao;
-    }
-
-    public void setCityDao(CityDao cityDao) {
-        this.cityDao = cityDao;
+    public void setCityMapper(CityMapper cityMapper) {
+        this.cityMapper = cityMapper;
     }
 
     public String getCityCode() {
