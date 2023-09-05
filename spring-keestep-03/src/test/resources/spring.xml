@@ -1,18 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <beans>
-<!--    <bean id="testBeanReference" class="org.kee.spring.test.bean.TestBeanReference"/>-->
-<!--    <bean id="testBeanReferenceParent" class="org.kee.spring.test.bean.TestBeanReferenceParent">-->
-<!--        <property name="cityCode" value="XIY"/>-->
-<!--        <property name="cityName" value="西安市"/>-->
-<!--        <property name="location" value="陕西省关中大院"/>-->
-<!--        <property name="testBeanReference" ref="testBeanReference"/>-->
-<!--    </bean>-->
+    <!--<bean id="testBeanReference" class="org.kee.spring.test.bean.TestBeanReference"/>
+    <bean id="testBeanReferenceParent" class="org.kee.spring.test.bean.TestBeanReferenceParent">
+        <property name="cityCode" value="XIY"/>
+        <property name="cityName" value="西安市"/>
+        <property name="location" value="陕西省关中大院"/>
+        <property name="testBeanReference" ref="testBeanReference"/>
+    </bean>-->
 
-    <bean id="cityDao" class="org.kee.spring.test.bean.CityDao" init-method="initDataMethod" destroy-method="destroyDataMethod"/>
+    <!--07/08-->
+    <!--<bean id="cityDao" class="org.kee.spring.test.bean.CityDao" init-method="initDataMethod" destroy-method="destroyDataMethod"/>
     <bean id="cityService" class="org.kee.spring.test.bean.CityService">
         <property name="cityCode" value="XIY"/>
         <property name="cityName" value="西安市"/>
         <property name="location" value="陕西省关中大院"/>
         <property name="cityDao" ref="cityDao"/>
+    </bean>-->
+
+    <!--09-->
+    <bean id="proxyCityMapper" class="org.kee.spring.test.bean.ProxyBeanFactory" />
+    <bean id="cityService" class="org.kee.spring.test.bean.CityService" scope="singleton">
+        <property name="cityCode" value="XIY"/>
+        <property name="cityName" value="西安市"/>
+        <property name="location" value="陕西省关中大院"/>
+        <property name="cityMapper" ref="proxyCityMapper"/>
     </bean>
 </beans>

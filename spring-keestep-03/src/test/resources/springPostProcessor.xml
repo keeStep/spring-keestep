@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <beans>
+    <!--05/06-->
     <bean id="testBeanReference" class="org.kee.spring.test.bean.TestBeanReference"/>
     <bean id="testBeanReferenceParent" class="org.kee.spring.test.bean.TestBeanReferenceParent">
         <property name="cityCode" value="XIY"/>

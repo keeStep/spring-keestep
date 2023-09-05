@@ -19,7 +19,7 @@ public class Test08Aware {
         // 2.获取Bean对象调用方法
         CityService cityService = (CityService) applicationContext.getBean("cityService");
         System.out.println("获取的城市信息：" + cityService.queryCityInfo());
-        System.out.println("BeanFactoryAware 感知到的信息：" + cityService.getBeanFactory());
-        System.out.println("ApplicationContextAware 感知到的信息：" + cityService.getApplicationContext());
+//        System.out.println("BeanFactoryAware 感知到的信息：" + cityService.getBeanFactory());
+//        System.out.println("ApplicationContextAware 感知到的信息：" + cityService.getApplicationContext());
     }
 }
