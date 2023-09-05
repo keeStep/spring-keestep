@@ -18,6 +18,11 @@ public class ProxyBeanFactory implements FactoryBean<CityMapper> {
     @Override
     public CityMapper getObject() throws Exception {
         InvocationHandler handler = (proxy, method, args) -> {
+            // 添加排除方法
+            if ("toString".equals(method.getName())) {
+                return this.toString();
+            }
+
             Map<String, String> hashMap = new HashMap<>();
             hashMap.put("XIY", "西安市");
             hashMap.put("SZX", "深圳市");

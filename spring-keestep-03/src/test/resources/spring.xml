@@ -18,8 +18,8 @@
     </bean>-->
 
     <!--09-->
-    <bean id="proxyCityMapper" class="org.kee.spring.test.bean.CityMapper" />
-    <bean id="cityService" class="org.kee.spring.test.bean.CityService" scope="prototype">
+    <bean id="proxyCityMapper" class="org.kee.spring.test.bean.ProxyBeanFactory" />
+    <bean id="cityService" class="org.kee.spring.test.bean.CityService" scope="singleton">
         <property name="cityCode" value="XIY"/>
         <property name="cityName" value="西安市"/>
         <property name="location" value="陕西省关中大院"/>
