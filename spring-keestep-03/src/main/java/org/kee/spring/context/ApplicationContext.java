@@ -1,6 +1,9 @@
 package org.kee.spring.context;
 
+import org.kee.spring.beans.factory.HierarchicalBeanFactory;
 import org.kee.spring.beans.factory.ListableBeanFactory;
+import org.kee.spring.context.event.ApplicationEventPublisher;
+import org.kee.spring.core.io.ResourceLoader;
 
 /**
  * <p> 应用上下文核心接口
@@ -10,5 +13,5 @@ import org.kee.spring.beans.factory.ListableBeanFactory;
  * @author Eric
  * @date 2023/8/25 23:43
  */
-public interface ApplicationContext extends ListableBeanFactory {
+public interface ApplicationContext extends ListableBeanFactory, HierarchicalBeanFactory, ResourceLoader, ApplicationEventPublisher {
 }
