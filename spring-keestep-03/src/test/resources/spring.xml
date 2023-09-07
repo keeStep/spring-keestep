@@ -18,11 +18,16 @@
     </bean>-->
 
     <!--09-->
-    <bean id="proxyCityMapper" class="org.kee.spring.test.bean.ProxyBeanFactory" />
+    <!--<bean id="proxyCityMapper" class="org.kee.spring.test.bean.ProxyBeanFactory" />
     <bean id="cityService" class="org.kee.spring.test.bean.CityService" scope="singleton">
         <property name="cityCode" value="XIY"/>
         <property name="cityName" value="西安市"/>
         <property name="location" value="陕西省关中大院"/>
         <property name="cityMapper" ref="proxyCityMapper"/>
-    </bean>
+    </bean>-->
+
+    <!--10-->
+    <bean class="org.kee.spring.test.event.CustomEventListener" />
+    <bean class="org.kee.spring.test.event.ContextClosedEventListener"/>
+    <bean class="org.kee.spring.test.event.ContextRefreshedEventListener"/>
 </beans>
