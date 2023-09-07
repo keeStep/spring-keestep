@@ -14,7 +14,7 @@ public class CustomEventListener implements ApplicationListener<CustomEvent> {
 
     @Override
     public void onApplicationEvent(CustomEvent event) {
-        System.out.println("\n监听到事件 CustomEvent 的消息：时间 " + new Date()
-                + "，消息 "+ event.getId() + " => " + event.getMessage());
+        System.out.println("\n\n监听到事件 CustomEvent 的消息, 时间 " + new Date()
+                + "\n----------- ：消息 "+ event.getId() + " => " + event.getMessage());
     }
 }
