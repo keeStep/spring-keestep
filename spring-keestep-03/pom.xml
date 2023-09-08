@@ -37,6 +37,23 @@
       <artifactId>hutool-all</artifactId>
       <version>5.8.18</version>
     </dependency>
+
+
+    <!-- AOP 添加依赖 aopalliance、aspectj -->
+    <!-- https://mvnrepository.com/artifact/aopalliance/aopalliance -->
+    <dependency>
+      <groupId>aopalliance</groupId>
+      <artifactId>aopalliance</artifactId>
+      <version>1.0</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
+    <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjweaver</artifactId>
+      <version>1.9.7</version>
+    </dependency>
+    <!-- AOP 添加依赖 -->
+
   </dependencies>
 
   <build>
