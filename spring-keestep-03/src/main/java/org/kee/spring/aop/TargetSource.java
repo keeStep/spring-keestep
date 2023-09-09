@@ -14,10 +14,18 @@ public class TargetSource {
         this.target = target;
     }
 
+    /**
+     * 获取代理对象实现的所有接口的对象
+     * @return
+     */
     public Class<?>[] getTargetClass() {
         return this.target.getClass().getInterfaces();
     }
 
+    /**
+     * 获取代理对象
+     * @return
+     */
     public Object getTarget() {
         return this.target;
     }
