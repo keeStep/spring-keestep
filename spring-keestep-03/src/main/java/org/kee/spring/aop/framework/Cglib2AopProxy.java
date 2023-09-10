@@ -1,6 +1,5 @@
 package org.kee.spring.aop.framework;
 
-import net.sf.cglib.proxy.Callback;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
@@ -27,7 +26,8 @@ public class Cglib2AopProxy implements AopProxy {
         Enhancer enhancer = new Enhancer();
         enhancer.setSuperclass(advisedSupport.getTargetSource().getTarget().getClass());
         enhancer.setInterfaces(advisedSupport.getTargetSource().getTargetClass());
-        // TODO callback  加拦截器干啥？ advisedSupport 这里边不是有拦截器么？
+        // callback  加拦截器干啥？ -- Cglib的代理执行操作(这个是Cglib专有拦截器，看包名！)
+        // 【可以对比JDK代理是实现了 InvocationHandler 的 invoke(), 而Cglib需要定义个拦截器来使用代理去执行】
         enhancer.setCallback(new DynamicAdvisedInterceptor(advisedSupport));
 
         return enhancer.create();
