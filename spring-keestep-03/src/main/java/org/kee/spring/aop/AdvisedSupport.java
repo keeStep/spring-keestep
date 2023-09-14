@@ -11,6 +11,11 @@ import org.aopalliance.intercept.MethodInterceptor;
 public class AdvisedSupport {
 
     /**
+     * 是否需要Cglib代理
+     */
+    private boolean proxyTargetClass;
+
+    /**
      * 被代理的目标对象
      */
     private TargetSource targetSource;
@@ -24,6 +29,15 @@ public class AdvisedSupport {
      * 方法拦截器
      */
     private MethodInterceptor methodInterceptor;
+
+
+    public boolean isProxyTargetClass() {
+        return proxyTargetClass;
+    }
+
+    public void setProxyTargetClass(boolean proxyTargetClass) {
+        this.proxyTargetClass = proxyTargetClass;
+    }
 
     public TargetSource getTargetSource() {
         return targetSource;
