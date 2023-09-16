@@ -11,15 +11,13 @@ import org.kee.spring.beans.factory.aware.Aware;
 import org.kee.spring.beans.factory.aware.BeanClassLoaderAware;
 import org.kee.spring.beans.factory.aware.BeanFactoryAware;
 import org.kee.spring.beans.factory.aware.BeanNameAware;
-import org.kee.spring.beans.factory.config.AutowireCapableBeanFactory;
-import org.kee.spring.beans.factory.config.BeanDefinition;
-import org.kee.spring.beans.factory.config.BeanPostProcessor;
-import org.kee.spring.beans.factory.config.BeanReference;
+import org.kee.spring.beans.factory.config.*;
 import org.kee.spring.beans.factory.surpport.instantiation.CglibSubclassingInstantiationStrategy;
 import org.kee.spring.beans.factory.surpport.instantiation.InstantiationStrategy;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+import java.util.Objects;
 
 /**
  * <p>
@@ -33,9 +31,14 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
     @Override
     protected Object createBean(String beanName, BeanDefinition beanDefinition, Object[] args) throws BeansException {
-
         Object bean = null;
         try {
+            // 0.代理对象（返回代理对象就不用Bean原始对象了）
+            bean = getBeanProxyIfNecessary(beanName, beanDefinition);
+            if (Objects.nonNull(bean)) {
+                return bean;
+            }
+
             // 1.实例化bean
             bean = createBeanInstance(beanName, beanDefinition, args);
 
@@ -58,6 +61,27 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
         // 6.返回bean
         return bean;
+    }
+
+    protected Object getBeanProxyIfNecessary(String beanName, BeanDefinition beanDefinition) {
+        Object bean = applyBeanPostProcessorsBeforeInitialization(beanDefinition.getBeanClass(), beanName);
+        if (Objects.nonNull(bean)) {
+            bean = applyBeanPostProcessorsAfterInitialization(bean, beanName);
+        }
+        return bean;
+    }
+
+    protected Object applyBeanPostProcessorsBeforeInitialization(Class<?> beanClass, String beanName) throws BeansException {
+        for (BeanPostProcessor beanPostProcessor : getBeanPostProcessors()) {
+            if (beanPostProcessor instanceof InstantiationAwareBeanPostProcessor) {
+                // 代理创建器 DefaultAdvisorAutoProxyCreator 实现了 InstantiationAwareBeanPostProcessor -> 生成代理对象
+                Object result = ((InstantiationAwareBeanPostProcessor) beanPostProcessor).postProcessBeforeInitialization(beanClass, beanName);
+                if (null != result) {
+                    return result;
+                }
+            }
+        }
+        return null;
     }
 
     /**
@@ -89,7 +113,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         invokeAwareMethods(beanName, bean);
 
         // 2.BeanPostProcessor Before
-        Object wrappedBean = applyBeanPostProcessorBeforeInitialization(bean, beanName);
+        Object wrappedBean = applyBeanPostProcessorsBeforeInitialization(bean, beanName);
 
         // 3.invokeInitMethods
         try {
@@ -99,7 +123,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         }
 
         // 4.BeanPostProcessor After
-        wrappedBean = applyBeanPostProcessorAfterInitialization(bean, beanName);
+        wrappedBean = applyBeanPostProcessorsAfterInitialization(bean, beanName);
         return wrappedBean;
     }
 
@@ -203,7 +227,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
     }
 
     @Override
-    public Object applyBeanPostProcessorBeforeInitialization(Object existingBean, String beanName) throws BeansException {
+    public Object applyBeanPostProcessorsBeforeInitialization(Object existingBean, String beanName) throws BeansException {
         Object result = existingBean;
         for (BeanPostProcessor beanPostProcessor : getBeanPostProcessors()) {
             Object current = beanPostProcessor.postProcessBeforeInitialization(result, beanName);
@@ -217,7 +241,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
     }
 
     @Override
-    public Object applyBeanPostProcessorAfterInitialization(Object existingBean, String beanName) throws BeansException {
+    public Object applyBeanPostProcessorsAfterInitialization(Object existingBean, String beanName) throws BeansException {
         Object result = existingBean;
         for (BeanPostProcessor beanPostProcessor : getBeanPostProcessors()) {
             Object current = beanPostProcessor.postProcessAfterInitialization(result, beanName);
