@@ -3,6 +3,8 @@ package org.kee.spring.aop.framework.autoproxy;
 import org.aopalliance.aop.Advice;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.kee.spring.aop.AdvisedSupport;
+import org.kee.spring.aop.Advisor;
+import org.kee.spring.aop.Pointcut;
 import org.kee.spring.aop.TargetSource;
 import org.kee.spring.aop.aspectj.AspectJExpressionPointcutAdvisor;
 import org.kee.spring.aop.framework.ProxyFactory;
@@ -69,7 +71,7 @@ public class DefaultAdvisorAutoProxyCreator implements BeanFactoryAware, Instant
             advisedSupport.setMethodInterceptor((MethodInterceptor) advisor.getAdvice());
             advisedSupport.setProxyTargetClass(false);
 
-            return new ProxyFactory(advisedSupport);
+            return new ProxyFactory(advisedSupport).getProxy();
         }
 
         return null;
@@ -81,8 +83,9 @@ public class DefaultAdvisorAutoProxyCreator implements BeanFactoryAware, Instant
      * @return
      */
     private boolean isInfrastructureClass(Class<?> beanClass) {
-        return Advice.class.isAssignableFrom(beanClass) || Advice.class.isAssignableFrom(beanClass) || Advice.class.isAssignableFrom(beanClass);
+        return Advice.class.isAssignableFrom(beanClass) || Pointcut.class.isAssignableFrom(beanClass) || Advisor.class.isAssignableFrom(beanClass);
     }
+
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
         return bean;
