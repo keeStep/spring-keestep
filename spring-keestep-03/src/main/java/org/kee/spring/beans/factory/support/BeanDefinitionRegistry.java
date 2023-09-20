@@ -1,4 +1,4 @@
-package org.kee.spring.beans.factory.surpport;
+package org.kee.spring.beans.factory.support;
 
 import org.kee.spring.beans.factory.config.BeanDefinition;
 

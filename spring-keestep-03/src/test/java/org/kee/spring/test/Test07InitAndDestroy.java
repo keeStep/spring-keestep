@@ -1,13 +1,8 @@
 package org.kee.spring.test;
 
 import org.junit.Test;
-import org.kee.spring.beans.factory.surpport.DefaultListableBeanFactory;
-import org.kee.spring.beans.factory.xml.XmlBeanDefinitionReader;
 import org.kee.spring.context.support.ClassPathXmlApplicationContext;
 import org.kee.spring.test.bean.CityService;
-import org.kee.spring.test.bean.TestBeanReferenceParent;
-import org.kee.spring.test.common.KeeBeanFactoryPostProcessor;
-import org.kee.spring.test.common.KeeBeanPostProcessor;
 
 /**
  * Unit test for simple App.

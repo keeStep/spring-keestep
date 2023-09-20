@@ -1,4 +1,4 @@
-package org.kee.spring.beans.factory.surpport;
+package org.kee.spring.beans.factory.support;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
@@ -12,8 +12,8 @@ import org.kee.spring.beans.factory.aware.BeanClassLoaderAware;
 import org.kee.spring.beans.factory.aware.BeanFactoryAware;
 import org.kee.spring.beans.factory.aware.BeanNameAware;
 import org.kee.spring.beans.factory.config.*;
-import org.kee.spring.beans.factory.surpport.instantiation.CglibSubclassingInstantiationStrategy;
-import org.kee.spring.beans.factory.surpport.instantiation.InstantiationStrategy;
+import org.kee.spring.beans.factory.support.instantiation.CglibSubclassingInstantiationStrategy;
+import org.kee.spring.beans.factory.support.instantiation.InstantiationStrategy;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;

@@ -1,4 +1,4 @@
-package org.kee.spring.beans.factory.surpport.instantiation;
+package org.kee.spring.beans.factory.support.instantiation;
 
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.NoOp;
