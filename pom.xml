@@ -5,10 +5,10 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.kee.spring</groupId>
-  <artifactId>spring-keestep-03</artifactId>
+  <artifactId>spring-keestep</artifactId>
   <version>1.0-SNAPSHOT</version>
 
-  <name>spring-keestep-03</name>
+  <name>spring-keestep</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
 
