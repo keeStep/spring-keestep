@@ -120,7 +120,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
             }
 
             // 4.属性填充
-            List<org.dom4j.Element> properties = root.elements("property");
+            List<org.dom4j.Element> properties = bean.elements("property");
             for (org.dom4j.Element property : properties) {
 
                 String attrName = property.attributeValue("name");
