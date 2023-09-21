@@ -3,7 +3,7 @@ package org.kee.spring.test;
 import cn.hutool.core.io.IoUtil;
 import org.junit.Before;
 import org.junit.Test;
-import org.kee.spring.beans.factory.surpport.DefaultListableBeanFactory;
+import org.kee.spring.beans.factory.support.DefaultListableBeanFactory;
 import org.kee.spring.beans.factory.xml.XmlBeanDefinitionReader;
 import org.kee.spring.core.io.DefaultResourceLoader;
 import org.kee.spring.core.io.Resource;

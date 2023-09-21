@@ -2,7 +2,7 @@ package org.kee.spring.test;
 
 import org.junit.Test;
 import org.kee.spring.beans.factory.config.BeanDefinition;
-import org.kee.spring.beans.factory.surpport.DefaultListableBeanFactory;
+import org.kee.spring.beans.factory.support.DefaultListableBeanFactory;
 import org.kee.spring.test.bean.TestBean;
 
 /**

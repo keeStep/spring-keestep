@@ -1,6 +1,6 @@
 package org.kee.spring.context.support;
 
-import org.kee.spring.beans.factory.surpport.DefaultListableBeanFactory;
+import org.kee.spring.beans.factory.support.DefaultListableBeanFactory;
 import org.kee.spring.beans.factory.xml.XmlBeanDefinitionReader;
 
 /**

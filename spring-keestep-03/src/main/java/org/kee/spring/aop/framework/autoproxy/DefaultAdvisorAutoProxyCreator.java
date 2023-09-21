@@ -12,7 +12,7 @@ import org.kee.spring.beans.BeansException;
 import org.kee.spring.beans.factory.BeanFactory;
 import org.kee.spring.beans.factory.aware.BeanFactoryAware;
 import org.kee.spring.beans.factory.config.InstantiationAwareBeanPostProcessor;
-import org.kee.spring.beans.factory.surpport.DefaultListableBeanFactory;
+import org.kee.spring.beans.factory.support.DefaultListableBeanFactory;
 
 import java.util.Collection;
 

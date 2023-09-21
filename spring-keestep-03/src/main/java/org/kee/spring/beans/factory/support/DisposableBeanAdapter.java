@@ -1,4 +1,4 @@
-package org.kee.spring.beans.factory.surpport;
+package org.kee.spring.beans.factory.support;
 
 import cn.hutool.core.util.StrUtil;
 import org.kee.spring.beans.BeansException;

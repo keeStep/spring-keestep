@@ -2,7 +2,7 @@ package org.kee.spring.context.support;
 
 import org.kee.spring.beans.BeansException;
 import org.kee.spring.beans.factory.ConfigurableListableBeanFactory;
-import org.kee.spring.beans.factory.surpport.DefaultListableBeanFactory;
+import org.kee.spring.beans.factory.support.DefaultListableBeanFactory;
 
 /**
  * <p> 抽象实现 AbstractApplicationContext 的 refreshBeanFactory

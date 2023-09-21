@@ -1,4 +1,4 @@
-package org.kee.spring.beans.factory.surpport.instantiation;
+package org.kee.spring.beans.factory.support.instantiation;
 
 import org.kee.spring.beans.BeansException;
 import org.kee.spring.beans.factory.config.BeanDefinition;
