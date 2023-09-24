@@ -28,7 +28,8 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader i
 
     @Override
     public void refresh() throws BeansException {
-        // 刷新容器 5 大步骤  [暂时是5大 哈哈哈]
+        // ********刷新容器 9 大步骤  [暂时是5大 哈哈哈 -> 9大了] *******
+
         // 1.创建 BeanFactory 并加载 BeanDefinition
         // ---- 子类 AbstractRefreshableApplicationContext 实现
         refreshBeanFactory();
