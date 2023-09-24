@@ -1,5 +1,7 @@
 package org.kee.spring.test.bean11And12;
 
+import org.kee.spring.context.annotation.Component;
+
 import java.util.Random;
 
 /**
@@ -8,7 +10,11 @@ import java.util.Random;
  * @author Eric
  * @date 2023/9/10 22:52
  */
+@Component
 public class UserService implements IUserService {
+
+    private String token;
+
     @Override
     public String queryUserInfo() {
         try {
@@ -27,5 +33,11 @@ public class UserService implements IUserService {
             e.printStackTrace();
         }
         return "Yeah！成功注册用户：" + username;
+    }
+
+
+    @Override
+    public String toString() {
+        return "UserService.token = " + token;
     }
 }

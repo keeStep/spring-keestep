@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans>
+    <!--占位符解析设置bean-->
+    <bean class="org.kee.spring.beans.factory.support.PropertyPlaceholderConfigurer" >
+        <property name="location" value="classpath:token.properties"/>
+    </bean>
+
+    <!--设置bean的占位符-->
+    <bean id="userService" class="org.kee.spring.test.bean11And12.UserService" >
+        <property name="token" value="${token}"/>
+    </bean>
+</beans>
