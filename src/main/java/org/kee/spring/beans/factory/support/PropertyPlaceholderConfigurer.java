@@ -56,6 +56,8 @@ public class PropertyPlaceholderConfigurer implements BeanFactoryPostProcessor {
             }
 
             // TODO 向容器中添加字符串解析器，解析 @Value 使用
+            StringValueResolver stringValueResolver = new PlaceholderResolvingStringValueResolver(properties);
+            beanFactory.addEmbeddedValueResolver(stringValueResolver);
 
         } catch (IOException e) {
             throw new BeansException("Could not load properties", e);
