@@ -1,6 +1,7 @@
 package org.kee.spring.beans.factory.config;
 
 import org.kee.spring.beans.BeansException;
+import org.kee.spring.beans.PropertyValues;
 
 /**
  * <p> Subinterface of {@link BeanPostProcessor} that adds a before-instantiation callback,
@@ -19,4 +20,14 @@ public interface InstantiationAwareBeanPostProcessor extends BeanPostProcessor {
      * @throws BeansException
      */
     Object postProcessBeforeInitialization(Class<?> beanClass, String beanName) throws BeansException;
+
+    /**
+     * 在 Bean 对象实例化完成之后，设置属性操作之前执行
+     * @param pvs
+     * @param bean
+     * @param beanName
+     * @return
+     * @throws BeansException
+     */
+    PropertyValues postProcessPropertyValues(PropertyValues pvs, Object bean, String beanName) throws BeansException;
 }

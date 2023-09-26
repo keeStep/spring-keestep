@@ -1,6 +1,7 @@
 package org.kee.spring.context.annotation;
 
 import cn.hutool.core.util.StrUtil;
+import org.kee.spring.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor;
 import org.kee.spring.beans.factory.config.BeanDefinition;
 import org.kee.spring.beans.factory.support.BeanDefinitionRegistry;
 
@@ -22,6 +23,7 @@ public class ClassPathBeanDefinitionScanner extends ClassPathScanningCandidateCo
     }
 
     public void doScan(String... basePackages) {
+        // 注册扫描包的 @Component的 bean
         for (String basePackage : basePackages) {
             Set<BeanDefinition> components = findCandidateComponents(basePackage);
             for (BeanDefinition beanDefinition : components) {
@@ -34,6 +36,9 @@ public class ClassPathBeanDefinitionScanner extends ClassPathScanningCandidateCo
                 registry.registerBeanDefinition(determineBeanName(beanDefinition), beanDefinition);
             }
         }
+
+        // 注册处理属性注入注解(@Value @Autowired)的 BeanPostProcessor
+        registry.registerBeanDefinition("org.kee.spring.beans.factory.annotation.autowiredAnnotationBeanPostProcessor", new BeanDefinition(AutowiredAnnotationBeanPostProcessor.class));
     }
 
     private String determineBeanName(BeanDefinition beanDefinition) {

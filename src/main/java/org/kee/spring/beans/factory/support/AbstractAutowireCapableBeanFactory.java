@@ -42,6 +42,9 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
             // 1.实例化bean
             bean = createBeanInstance(beanName, beanDefinition, args);
 
+            // 2.在设置Bean属性之前，允许 BeanPostProcessor 修改属性值
+            applyBeanPostProcessorsBeforeApplyBeanProperty(beanName, bean, beanDefinition);
+
             // 2.为Bean填充属性
             applyBeanProperty(beanName, bean, beanDefinition);
 
@@ -62,6 +65,20 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         // 6.返回bean
         return bean;
     }
+
+    protected void applyBeanPostProcessorsBeforeApplyBeanProperty(String beanName, Object bean, BeanDefinition beanDefinition) {
+        for (BeanPostProcessor beanPostProcessor : getBeanPostProcessors()) {
+            if (beanPostProcessor instanceof InstantiationAwareBeanPostProcessor) {
+                PropertyValues propertyValues = ((InstantiationAwareBeanPostProcessor) beanPostProcessor).postProcessPropertyValues(beanDefinition.getPropertyValues(), bean, beanName);
+                if (null != propertyValues) {
+                    for (PropertyValue propertyValue : propertyValues.getPropertyValues()) {
+                        beanDefinition.getPropertyValues().addPropertyValue(propertyValue);
+                    }
+                }
+            }
+        }
+    }
+
 
     protected Object getBeanProxyIfNecessary(String beanName, BeanDefinition beanDefinition) {
         Object bean = applyBeanPostProcessorsBeforeInitialization(beanDefinition.getBeanClass(), beanName);
