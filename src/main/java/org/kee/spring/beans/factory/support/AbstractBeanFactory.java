@@ -6,6 +6,7 @@ import org.kee.spring.beans.factory.config.BeanDefinition;
 import org.kee.spring.beans.factory.config.BeanPostProcessor;
 import org.kee.spring.beans.factory.config.ConfigurableBeanFactory;
 import org.kee.spring.util.ClassUtils;
+import org.kee.spring.util.StringValueResolver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,8 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
     private ClassLoader beanClassLoader = ClassUtils.getDefaultClassLoader();
 
     private final List<BeanPostProcessor> beanPostProcessors = new ArrayList<>();
+
+    private final List<StringValueResolver> embeddedValueResolvers = new ArrayList<>();
 
     @Override
     public Object getBean(String name) throws BeansException {
@@ -103,5 +106,31 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
     // BeanClassLoader
     public ClassLoader getBeanClassLoader() {
         return beanClassLoader;
+    }
+
+    // embeddedValueResolvers
+    /**
+     * Add a String resolver for embedded values such as annotation attributes.
+     *
+     * @param stringValueResolver
+     */
+    @Override
+    public void addEmbeddedValueResolver(StringValueResolver stringValueResolver) {
+        embeddedValueResolvers.add(stringValueResolver);
+    }
+
+    /**
+     * Resolve the given embedded value, e.g. an annotation attribute.
+     *
+     * @param value
+     * @return
+     */
+    @Override
+    public String resolveEmbeddedValue(String value) {
+        String result = value;
+        for (StringValueResolver valueResolver : this.embeddedValueResolvers) {
+            result = valueResolver.resolveStringValue(result);
+        }
+        return result;
     }
 }

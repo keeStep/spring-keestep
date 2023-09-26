@@ -9,6 +9,7 @@ import org.kee.spring.aop.TargetSource;
 import org.kee.spring.aop.aspectj.AspectJExpressionPointcutAdvisor;
 import org.kee.spring.aop.framework.ProxyFactory;
 import org.kee.spring.beans.BeansException;
+import org.kee.spring.beans.PropertyValues;
 import org.kee.spring.beans.factory.BeanFactory;
 import org.kee.spring.beans.factory.aware.BeanFactoryAware;
 import org.kee.spring.beans.factory.config.InstantiationAwareBeanPostProcessor;
@@ -75,6 +76,20 @@ public class DefaultAdvisorAutoProxyCreator implements BeanFactoryAware, Instant
         }
 
         return null;
+    }
+
+    /**
+     * 在 Bean 对象实例化完成之后，设置属性操作之前执行
+     *
+     * @param pvs
+     * @param bean
+     * @param beanName
+     * @return
+     * @throws BeansException
+     */
+    @Override
+    public PropertyValues postProcessPropertyValues(PropertyValues pvs, Object bean, String beanName) throws BeansException {
+        return pvs;
     }
 
     /**

@@ -4,6 +4,7 @@ import org.kee.spring.beans.factory.BeanFactory;
 import org.kee.spring.beans.factory.HierarchicalBeanFactory;
 import org.kee.spring.beans.factory.config.BeanPostProcessor;
 import org.kee.spring.beans.factory.config.SingletonBeanRegistry;
+import org.kee.spring.util.StringValueResolver;
 
 /**
  * Configuration interface to be implemented by most bean factories. Provides
@@ -29,4 +30,17 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
      * 销毁单例对象
      */
     void destroySingletons();
+
+    /**
+     * Add a String resolver for embedded values such as annotation attributes.
+     * @param stringValueResolver
+     */
+    void addEmbeddedValueResolver(StringValueResolver stringValueResolver);
+
+    /**
+     * Resolve the given embedded value, e.g. an annotation attribute.
+     * @param value
+     * @return
+     */
+    String resolveEmbeddedValue(String value);
 }
