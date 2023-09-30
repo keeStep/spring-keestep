@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<beans>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	         http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context ">
     <!--<bean id="testBeanReference" class="org.kee.spring.test.bean.TestBeanReference"/>
     <bean id="testBeanReferenceParent" class="org.kee.spring.test.bean.TestBeanReferenceParent">
         <property name="cityCode" value="XIY"/>
@@ -33,19 +38,28 @@
 
     <!--12-->
     <!--自定义bean-->
-    <bean id="userService" class="org.kee.spring.test.bean11And12.UserService" />
-    <!--代理创建器-->
+    <!--<bean id="userService" class="org.kee.spring.test.bean11And12.UserService" />
+    &lt;!&ndash;代理创建器&ndash;&gt;
     <bean class="org.kee.spring.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" />
-    <!--自定义代理执行的before拦截器-->
+    &lt;!&ndash;自定义代理执行的before拦截器&ndash;&gt;
     <bean id="beforeAdvice" class="org.kee.spring.test.bean11And12.UserServiceBeforeAdvice" />
-    <!--代理执行的before拦截器：管理调用自定义拦截器-->
+    &lt;!&ndash;代理执行的before拦截器：管理调用自定义拦截器&ndash;&gt;
     <bean id="methodInterceptor" class="org.kee.spring.aop.framework.adapter.MethodBeforeAdviceInterceptor" >
         <property name="advice" ref="beforeAdvice"/>
     </bean>
-    <!--AOP切面访问者-->
+    &lt;!&ndash;AOP切面访问者&ndash;&gt;
     <bean id="pointcutAdvisor" class="org.kee.spring.aop.aspectj.AspectJExpressionPointcutAdvisor" >
         <property name="advice" ref="methodInterceptor"/>
         <property name="expression" value="execution(* org.kee.spring.test.bean11And12.IUserService.*(..))"/>
+    </bean>-->
+
+    <!--14-->
+    <!--加载处理自定义属性配置-->
+    <bean class="org.kee.spring.beans.factory.support.PropertyPlaceholderConfigurer" >
+        <property name="location" value="classpath:city.properties"/>
     </bean>
+
+    <!--扫描注册bean包位置-->
+    <context:component-scan base-package="org.kee.spring.test.bean"/>
 
 </beans>
