@@ -1,29 +1,28 @@
 package org.kee.spring.test.bean;
 
+import org.kee.spring.beans.factory.annotation.Autowired;
+import org.kee.spring.beans.factory.annotation.Value;
+import org.kee.spring.context.annotation.Component;
+
 /**
  * <p>
  *
  * @author Eric
  * @date 2023/8/13 23:21
  */
+@Component
 public class CityService {
 
+    @Value("${cityCode}")
     private String cityCode;
-    private String cityName;
-    private String location;
-    private CityMapper cityMapper;
+
+    @Autowired
+    private CityDao cityDao;
 
     public String queryCityInfo() {
-        return cityMapper.getCityName(cityCode) + ", " + cityName + ", " + location;
+        return cityDao.getCityName(cityCode);
     }
 
-    public CityMapper getCityMapper() {
-        return cityMapper;
-    }
-
-    public void setCityMapper(CityMapper cityMapper) {
-        this.cityMapper = cityMapper;
-    }
 
     public String getCityCode() {
         return cityCode;
@@ -33,20 +32,5 @@ public class CityService {
         this.cityCode = cityCode;
     }
 
-    public String getCityName() {
-        return cityName;
-    }
-
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
 
 }

@@ -1,5 +1,6 @@
 package org.kee.spring.beans.factory.support;
 
+import cn.hutool.core.util.StrUtil;
 import org.kee.spring.beans.BeansException;
 import org.kee.spring.beans.PropertyValue;
 import org.kee.spring.beans.PropertyValues;
@@ -55,7 +56,7 @@ public class PropertyPlaceholderConfigurer implements BeanFactoryPostProcessor {
                 }
             }
 
-            // TODO 向容器中添加字符串解析器，解析 @Value 使用
+            // 向容器中添加字符串解析器，解析 @Value 使用
             StringValueResolver stringValueResolver = new PlaceholderResolvingStringValueResolver(properties);
             beanFactory.addEmbeddedValueResolver(stringValueResolver);
 
@@ -76,6 +77,10 @@ public class PropertyPlaceholderConfigurer implements BeanFactoryPostProcessor {
         if (startIdx != -1 && endIdx != -1 && startIdx < endIdx) {
             String propKey = value.substring(startIdx + 2, endIdx);
             String propVal = properties.getProperty(propKey);
+
+            if (StrUtil.isBlank(propVal)) {
+                return value;
+            }
 
             stringBuilder.replace(startIdx, endIdx + 1, propVal);
         }
