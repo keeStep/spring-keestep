@@ -33,11 +33,11 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
     protected Object createBean(String beanName, BeanDefinition beanDefinition, Object[] args) throws BeansException {
         Object bean = null;
         try {
-            // 0.代理对象（返回代理对象就不用Bean原始对象了）
-            bean = getBeanProxyIfNecessary(beanName, beanDefinition);
+            // 0.代理对象（返回代理对象就不用Bean原始对象了）--> 迁移到初始化之后
+            /*bean = getBeanProxyIfNecessary(beanName, beanDefinition);
             if (Objects.nonNull(bean)) {
                 return bean;
-            }
+            }*/
 
             // 1.实例化bean
             bean = createBeanInstance(beanName, beanDefinition, args);
