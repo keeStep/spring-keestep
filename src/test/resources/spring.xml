@@ -55,11 +55,21 @@
 
     <!--14-->
     <!--加载处理自定义属性配置-->
-    <bean class="org.kee.spring.beans.factory.support.PropertyPlaceholderConfigurer" >
+    <!--<bean class="org.kee.spring.beans.factory.support.PropertyPlaceholderConfigurer" >
         <property name="location" value="classpath:city.properties"/>
     </bean>
 
+    &lt;!&ndash;扫描注册bean包位置&ndash;&gt;
+    <context:component-scan base-package="org.kee.spring"/>
+    -->
+
+    <!--15-->
+    <!--加载处理自定义属性配置-->
+    <bean class="org.kee.spring.beans.factory.support.PropertyPlaceholderConfigurer" >
+        <property name="location" value="classpath:token.properties"/>
+    </bean>
+
     <!--扫描注册bean包位置-->
-    <context:component-scan base-package="org.kee.spring.test.bean"/>
+    <context:component-scan base-package="org.kee.spring"/>
 
 </beans>

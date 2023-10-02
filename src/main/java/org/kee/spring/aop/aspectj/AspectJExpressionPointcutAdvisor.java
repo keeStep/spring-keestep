@@ -4,6 +4,10 @@ import org.aopalliance.aop.Advice;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.kee.spring.aop.Pointcut;
 import org.kee.spring.aop.PointcutAdvisor;
+import org.kee.spring.beans.factory.annotation.Autowired;
+import org.kee.spring.beans.factory.annotation.Qualifier;
+import org.kee.spring.beans.factory.annotation.Value;
+import org.kee.spring.context.annotation.Component;
 
 import java.util.Objects;
 
@@ -15,6 +19,7 @@ import java.util.Objects;
  * @author Eric
  * @date 2023/9/14 23:26
  */
+@Component
 public class AspectJExpressionPointcutAdvisor implements PointcutAdvisor {
 
     /**
@@ -24,10 +29,13 @@ public class AspectJExpressionPointcutAdvisor implements PointcutAdvisor {
     /**
      * 通知处理（这里特指拦截通知处理）
      */
+    @Autowired
+    @Qualifier("methodBeforeAdviceInterceptor")
     private Advice advice;
     /**
      * 表达式
      */
+    @Value("execution(* org.kee.spring.test.bean11And12.*(..))")
     private String expression;
 
 
