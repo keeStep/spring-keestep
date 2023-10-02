@@ -3,6 +3,9 @@ package org.kee.spring.aop.framework.adapter;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.kee.spring.aop.MethodBeforeAdvice;
+import org.kee.spring.beans.factory.annotation.Autowired;
+import org.kee.spring.beans.factory.annotation.Qualifier;
+import org.kee.spring.context.annotation.Component;
 
 import java.lang.reflect.Method;
 
@@ -14,8 +17,11 @@ import java.lang.reflect.Method;
  * @author Eric
  * @date 2023/9/14 23:35
  */
+@Component("methodBeforeAdviceInterceptor")
 public class MethodBeforeAdviceInterceptor implements MethodInterceptor {
 
+    @Autowired
+    @Qualifier("beforeAdvice")
     private MethodBeforeAdvice advice;
 
     public MethodBeforeAdviceInterceptor() {

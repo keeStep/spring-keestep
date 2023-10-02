@@ -71,7 +71,7 @@ public class AutowiredAnnotationBeanPostProcessor implements InstantiationAwareB
                 }
 
                 // 获取Bean
-                Object fieldBean = StrUtil.isBlank(fieldBeanName) ? beanFactory.getBean(fieldBeanClass) : beanFactory.getBean(fieldBeanName, bean);
+                Object fieldBean = StrUtil.isBlank(fieldBeanName) ? beanFactory.getBean(fieldBeanClass) : beanFactory.getBean(fieldBeanName, fieldBeanClass);
 
                 // 设置属性值
                 BeanUtil.setFieldValue(bean, field.getName(), fieldBean);

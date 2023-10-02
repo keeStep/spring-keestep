@@ -1,5 +1,6 @@
 package org.kee.spring.test.bean11And12;
 
+import org.kee.spring.beans.factory.annotation.Value;
 import org.kee.spring.context.annotation.Component;
 
 import java.util.Random;
@@ -13,6 +14,7 @@ import java.util.Random;
 @Component
 public class UserService implements IUserService {
 
+    @Value("${token}")
     private String token;
 
     @Override
