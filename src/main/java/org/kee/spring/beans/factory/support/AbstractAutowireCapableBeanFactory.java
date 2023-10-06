@@ -14,6 +14,7 @@ import org.kee.spring.beans.factory.aware.BeanNameAware;
 import org.kee.spring.beans.factory.config.*;
 import org.kee.spring.beans.factory.support.instantiation.CglibSubclassingInstantiationStrategy;
 import org.kee.spring.beans.factory.support.instantiation.InstantiationStrategy;
+import org.kee.spring.beans.factory.support.instantiation.SimpleInstantiationStrategy;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -27,13 +28,14 @@ import java.util.Objects;
  */
 public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFactory implements AutowireCapableBeanFactory {
 
-    private InstantiationStrategy instantiationStrategy = new CglibSubclassingInstantiationStrategy();
+    private InstantiationStrategy instantiationStrategy = new SimpleInstantiationStrategy();
 
     @Override
     protected Object createBean(String beanName, BeanDefinition beanDefinition, Object[] args) throws BeansException {
         Object bean = null;
         try {
             // 0.代理对象（返回代理对象就不用Bean原始对象了）--> 迁移到初始化之后
+            // FIXME 16-不明白为何小傅哥还是把这个留着，代理对象的创建已经迁到初始化之后了厊
             /*bean = getBeanProxyIfNecessary(beanName, beanDefinition);
             if (Objects.nonNull(bean)) {
                 return bean;
@@ -41,6 +43,12 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
             // 1.实例化bean
             bean = createBeanInstance(beanName, beanDefinition, args);
+
+            // * 处理循环依赖
+            if (beanDefinition.isSingleton()) {
+                Object finalBean = bean;
+                addSingletonFactory(beanName, () -> getEarlyBeanReference(beanName, beanDefinition, finalBean));
+            }
 
             // 2.在设置Bean属性之前，允许 BeanPostProcessor 修改属性值
             applyBeanPostProcessorsBeforeApplyBeanProperty(beanName, bean, beanDefinition);
@@ -58,13 +66,29 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         registerDisposableBeanIfNecessary(beanName, bean, beanDefinition);
 
         // 5.注册单例bean
+        Object exposedBean = bean;
         if (beanDefinition.isSingleton()) {
+            exposedBean = getSingleton(beanName);
             registerSingleton(beanName, bean);
         }
 
         // 6.返回bean
-        return bean;
+        return exposedBean;
     }
+
+
+    protected Object getEarlyBeanReference(String beanName, BeanDefinition beanDefinition, Object bean) {
+        Object exposedObject = bean;
+        for (BeanPostProcessor beanPostProcessor : getBeanPostProcessors()) {
+            if (beanPostProcessor instanceof InstantiationAwareBeanPostProcessor) {
+                exposedObject = ((InstantiationAwareBeanPostProcessor) beanPostProcessor).getEarlyBeanReference(exposedObject, beanName);
+                if (null == exposedObject) return exposedObject;
+            }
+        }
+
+        return exposedObject;
+    }
+
 
     protected void applyBeanPostProcessorsBeforeApplyBeanProperty(String beanName, Object bean, BeanDefinition beanDefinition) {
         for (BeanPostProcessor beanPostProcessor : getBeanPostProcessors()) {
@@ -207,7 +231,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
                 // 属性值填充：
                 /*
                     方案1:反射
-                    方案2:工具类（此处重点不在反射，可直接使用hutool的工具类）
+                    方案2:工具类（也是反射实现的哈哈哈）（此处重点不在反射，可直接使用hutool的工具类）
                  */
                 BeanUtil.setFieldValue(bean, name, value);
             }

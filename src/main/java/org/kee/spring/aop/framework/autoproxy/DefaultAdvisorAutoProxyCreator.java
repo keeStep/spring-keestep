@@ -17,6 +17,9 @@ import org.kee.spring.beans.factory.support.DefaultListableBeanFactory;
 import org.kee.spring.context.annotation.Component;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * <p> 代理对象创建者
@@ -28,6 +31,8 @@ import java.util.Collection;
 public class DefaultAdvisorAutoProxyCreator implements BeanFactoryAware, InstantiationAwareBeanPostProcessor {
 
     private DefaultListableBeanFactory beanFactory;
+
+    private final Set<Object> earlyProxyReferences = Collections.synchronizedSet(new HashSet<>());
 
     @Override
     public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
@@ -77,6 +82,15 @@ public class DefaultAdvisorAutoProxyCreator implements BeanFactoryAware, Instant
 
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+        if (!earlyProxyReferences.contains(beanName)) {
+            return wrapIfNecessary(bean, beanName);
+        }
+
+        return bean;
+    }
+
+    private Object wrapIfNecessary(Object bean, String beanName) {
+
         // AOP的基础设施bean不参与aop的应用
         if (isInfrastructureClass(bean.getClass())) {
             return null;
@@ -105,5 +119,12 @@ public class DefaultAdvisorAutoProxyCreator implements BeanFactoryAware, Instant
         }
 
         return bean;
+    }
+
+
+    @Override
+    public Object getEarlyBeanReference(Object bean, String beanName) {
+        earlyProxyReferences.add(beanName);
+        return wrapIfNecessary(bean, beanName);
     }
 }
