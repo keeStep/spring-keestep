@@ -8,9 +8,9 @@ import org.kee.spring.aop.framework.JdkDynamicAopProxy;
 import org.kee.spring.context.support.ClassPathXmlApplicationContext;
 import org.kee.spring.test.bean.CityDao;
 import org.kee.spring.test.bean.CityService;
-import org.kee.spring.test.bean11And12.IUserService;
-import org.kee.spring.test.bean11And12.UserService;
-import org.kee.spring.test.bean11And12.UserServiceInterceptor;
+import org.kee.spring.test.bean11.IUserService;
+import org.kee.spring.test.bean11.UserService;
+import org.kee.spring.test.bean11.UserServiceInterceptor;
 
 import java.lang.reflect.Method;
 

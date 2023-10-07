@@ -7,6 +7,6 @@
             http://www.springframework.org/schema/context ">
 
     <!--需自动注册的Bean的包位置（Bean需标记注解：目前是 @Component）-->
-    <context:component-scan base-package="org.kee.spring.test.bean11And12" />
+    <context:component-scan base-package="org.kee.spring.test.bean11" />
 
 </beans>

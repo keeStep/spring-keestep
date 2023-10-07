@@ -1,4 +1,4 @@
-package org.kee.spring.test.bean11And12;
+package org.kee.spring.test.bean11;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;

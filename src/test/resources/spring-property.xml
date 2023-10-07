@@ -6,7 +6,7 @@
     </bean>
 
     <!--设置bean的占位符-->
-    <bean id="userService" class="org.kee.spring.test.bean11And12.UserService" >
+    <bean id="userService" class="org.kee.spring.test.bean11.UserService" >
         <property name="token" value="${token}"/>
     </bean>
 </beans>

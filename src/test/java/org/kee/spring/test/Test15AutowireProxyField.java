@@ -3,7 +3,7 @@ package org.kee.spring.test;
 import org.junit.Test;
 import org.kee.spring.context.support.ClassPathXmlApplicationContext;
 import org.kee.spring.test.bean.CityService;
-import org.kee.spring.test.bean11And12.IUserService;
+import org.kee.spring.test.bean11.IUserService;
 
 /**
  * Unit test for simple App.
