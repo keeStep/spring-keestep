@@ -35,7 +35,7 @@ public class AspectJExpressionPointcutAdvisor implements PointcutAdvisor {
     /**
      * 表达式
      */
-    @Value("execution(* org.kee.spring.test.bean11.*(..))")
+    @Value("execution(* org.kee.spring.test.bean.Wife.*(..))")
     private String expression;
 
 

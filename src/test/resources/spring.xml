@@ -5,71 +5,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 	         http://www.springframework.org/schema/beans/spring-beans.xsd
             http://www.springframework.org/schema/context ">
-    <!--<bean id="testBeanReference" class="org.kee.spring.test.bean.TestBeanReference"/>
-    <bean id="testBeanReferenceParent" class="org.kee.spring.test.bean.TestBeanReferenceParent">
-        <property name="cityCode" value="XIY"/>
-        <property name="cityName" value="西安市"/>
-        <property name="location" value="陕西省关中大院"/>
-        <property name="testBeanReference" ref="testBeanReference"/>
-    </bean>-->
-
-    <!--07/08-->
-    <!--<bean id="cityDao" class="org.kee.spring.test.bean.CityDao" init-method="initDataMethod" destroy-method="destroyDataMethod"/>
-    <bean id="cityService" class="org.kee.spring.test.bean.CityService">
-        <property name="cityCode" value="XIY"/>
-        <property name="cityName" value="西安市"/>
-        <property name="location" value="陕西省关中大院"/>
-        <property name="cityDao" ref="cityDao"/>
-    </bean>-->
-
-    <!--09-->
-    <!--<bean id="proxyCityMapper" class="org.kee.spring.test.bean.ProxyBeanFactory" />
-    <bean id="cityService" class="org.kee.spring.test.bean.CityService" scope="singleton">
-        <property name="cityCode" value="XIY"/>
-        <property name="cityName" value="西安市"/>
-        <property name="location" value="陕西省关中大院"/>
-        <property name="cityMapper" ref="proxyCityMapper"/>
-    </bean>-->
-
-    <!--10-->
-    <!--<bean class="org.kee.spring.test.event.CustomEventListener" />
-    <bean class="org.kee.spring.test.event.ContextClosedEventListener"/>
-    <bean class="org.kee.spring.test.event.ContextRefreshedEventListener"/>-->
-
-    <!--12-->
-    <!--自定义bean-->
-    <!--<bean id="userService" class="org.kee.spring.test.bean11.UserService" />
-    &lt;!&ndash;代理创建器&ndash;&gt;
-    <bean class="org.kee.spring.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" />
-    &lt;!&ndash;自定义代理执行的before拦截器&ndash;&gt;
-    <bean id="beforeAdvice" class="org.kee.spring.test.bean11.UserServiceBeforeAdvice" />
-    &lt;!&ndash;代理执行的before拦截器：管理调用自定义拦截器&ndash;&gt;
-    <bean id="methodInterceptor" class="org.kee.spring.aop.framework.adapter.MethodBeforeAdviceInterceptor" >
-        <property name="advice" ref="beforeAdvice"/>
-    </bean>
-    &lt;!&ndash;AOP切面访问者&ndash;&gt;
-    <bean id="pointcutAdvisor" class="org.kee.spring.aop.aspectj.AspectJExpressionPointcutAdvisor" >
-        <property name="advice" ref="methodInterceptor"/>
-        <property name="expression" value="execution(* org.kee.spring.test.bean11.IUserService.*(..))"/>
-    </bean>-->
-
-    <!--14-->
-    <!--加载处理自定义属性配置-->
-    <!--<bean class="org.kee.spring.beans.factory.support.PropertyPlaceholderConfigurer" >
-        <property name="location" value="classpath:city.properties"/>
-    </bean>
-
-    &lt;!&ndash;扫描注册bean包位置&ndash;&gt;
-    <context:component-scan base-package="org.kee.spring"/>
-    -->
-
-    <!--15-->
-    <!--加载处理自定义属性配置-->
-    <bean class="org.kee.spring.beans.factory.support.PropertyPlaceholderConfigurer" >
-        <property name="location" value="classpath:token.properties"/>
-    </bean>
 
     <!--扫描注册bean包位置-->
-    <context:component-scan base-package="org.kee.spring"/>
+    <context:component-scan base-package="org.kee.spring.aop,org.kee.spring.test.bean"/>
 
 </beans>

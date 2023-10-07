@@ -2,7 +2,8 @@ package org.kee.spring.test;
 
 import org.junit.Test;
 import org.kee.spring.context.support.ClassPathXmlApplicationContext;
-import org.kee.spring.test.bean11.IUserService;
+import org.kee.spring.test.bean.Husband;
+import org.kee.spring.test.bean.Wife;
 
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -15,6 +16,16 @@ public class Test16CycleDependencies {
 
     private final static Map<String, Object> singletonObjects = new ConcurrentHashMap<>(100);
 
+
+    @Test
+    public void TestCycle() {
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring.xml");
+        Husband husband = applicationContext.getBean(Husband.class);
+        Wife wife = applicationContext.getBean(Wife.class);
+
+        System.out.println("老公的媳妇呀：" + husband.queryWife());
+        System.out.println("媳妇的老公呀：" + wife.queryHusband());
+    }
 
     /**
      * 使用一级缓存对循环依赖的简单解决方案测试
@@ -57,15 +68,6 @@ public class Test16CycleDependencies {
         }
 
         return t;
-    }
-
-    @Test
-    public void TestCycle() {
-        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring.xml");
-
-        IUserService userService = applicationContext.getBean("userService", IUserService.class);
-
-        System.out.println("测试结果：" + userService.queryUserInfo());
     }
 }
 

@@ -90,10 +90,9 @@ public class DefaultAdvisorAutoProxyCreator implements BeanFactoryAware, Instant
     }
 
     private Object wrapIfNecessary(Object bean, String beanName) {
-
         // AOP的基础设施bean不参与aop的应用
         if (isInfrastructureClass(bean.getClass())) {
-            return null;
+            return bean;
         }
 
         // 1.获取所有通知标记的访问者

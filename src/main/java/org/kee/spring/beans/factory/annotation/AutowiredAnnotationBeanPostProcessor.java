@@ -74,6 +74,7 @@ public class AutowiredAnnotationBeanPostProcessor implements InstantiationAwareB
                 Object fieldBean = StrUtil.isBlank(fieldBeanName) ? beanFactory.getBean(fieldBeanClass) : beanFactory.getBean(fieldBeanName, fieldBeanClass);
 
                 // 设置属性值
+                // FIXME husband 注入 wife失败：cn.hutool.core.convert.ConvertException: Unsupported source type: class com.sun.proxy.$Proxy8
                 BeanUtil.setFieldValue(bean, field.getName(), fieldBean);
             }
         }
