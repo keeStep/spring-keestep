@@ -112,7 +112,8 @@ public class DefaultAdvisorAutoProxyCreator implements BeanFactoryAware, Instant
             advisedSupport.setTargetSource(targetSource);
             advisedSupport.setMethodMatcher(advisor.getPointcut().getMethodMatcher());
             advisedSupport.setMethodInterceptor((MethodInterceptor) advisor.getAdvice());
-            advisedSupport.setProxyTargetClass(false);
+            // TODO TELL ME WHY 从JDK代理改为Cglib代理??
+            advisedSupport.setProxyTargetClass(true);
 
             return new ProxyFactory(advisedSupport).getProxy();
         }

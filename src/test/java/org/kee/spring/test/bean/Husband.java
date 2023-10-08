@@ -19,11 +19,4 @@ public class Husband {
         return "Husband.wife";
     }
 
-    public Wife getWife() {
-        return wife;
-    }
-
-    public void setWife(Wife wife) {
-        this.wife = wife;
-    }
 }

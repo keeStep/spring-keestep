@@ -43,7 +43,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 
     protected <T> T doGetBean(final String name, final Object[] args) {
         // 1.先从缓存获取
-        Object bean = getSingleton(name);
+         Object bean = getSingleton(name);
         if (Objects.nonNull(bean)) {
             // 如果是 FactoryBean ，则还需要调用 FactoryBean#getObject
             // 【即：通过工厂容器（FactoryBean）获取name对应的对象bean】
