@@ -65,7 +65,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
         List<String> beanNames = new ArrayList<>();
         for (Map.Entry<String, BeanDefinition> beanDefinitionEntry : beanDefinitionMap.entrySet()) {
             Class beanClass = beanDefinitionEntry.getValue().getBeanClass();
-            if (requiredType.isAssignableFrom(beanClass)) {
+             if (requiredType.isAssignableFrom(beanClass)) {
                 beanNames.add(beanDefinitionEntry.getKey());
             }
         }

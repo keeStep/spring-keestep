@@ -90,10 +90,9 @@ public class DefaultAdvisorAutoProxyCreator implements BeanFactoryAware, Instant
     }
 
     private Object wrapIfNecessary(Object bean, String beanName) {
-
         // AOP的基础设施bean不参与aop的应用
         if (isInfrastructureClass(bean.getClass())) {
-            return null;
+            return bean;
         }
 
         // 1.获取所有通知标记的访问者
@@ -113,7 +112,8 @@ public class DefaultAdvisorAutoProxyCreator implements BeanFactoryAware, Instant
             advisedSupport.setTargetSource(targetSource);
             advisedSupport.setMethodMatcher(advisor.getPointcut().getMethodMatcher());
             advisedSupport.setMethodInterceptor((MethodInterceptor) advisor.getAdvice());
-            advisedSupport.setProxyTargetClass(false);
+            // TODO TELL ME WHY 从JDK代理改为Cglib代理??
+            advisedSupport.setProxyTargetClass(true);
 
             return new ProxyFactory(advisedSupport).getProxy();
         }
