@@ -133,7 +133,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
      * @param beanDefinition
      */
     protected void registerDisposableBeanIfNecessary(String beanName, Object bean, BeanDefinition beanDefinition) {
-        // 非 Singleton 类型的 Bean 对象不必执行销毁 TODO 为什么？
+        // 非 Singleton 类型的 Bean 对象不必执行销毁  为什么？-- 因为原型对象不会存储不用销毁
         if (!beanDefinition.isSingleton()) {
             return;
         }
