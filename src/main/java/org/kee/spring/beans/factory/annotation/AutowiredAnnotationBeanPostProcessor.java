@@ -109,7 +109,7 @@ public class AutowiredAnnotationBeanPostProcessor implements InstantiationAwareB
      */
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-        return null;
+        return bean;
     }
 
     /**
@@ -122,6 +122,6 @@ public class AutowiredAnnotationBeanPostProcessor implements InstantiationAwareB
      */
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-        return null;
+        return bean;
     }
 }
