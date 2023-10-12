@@ -28,6 +28,13 @@ public class PropertyValues {
     }
 
     public void addPropertyValue(PropertyValue pv) {
+        // 覆盖propertyValueList已有值
+        for (int i = 0; i < propertyValueList.size(); i++) {
+            PropertyValue propertyValue = propertyValueList.get(i);
+            if (propertyValue.getName().equals(pv.getName())) {
+                propertyValueList.set(i, pv);
+            }
+        }
         propertyValueList.add(pv);
     }
 }

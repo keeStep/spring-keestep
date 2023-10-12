@@ -6,6 +6,7 @@ import org.kee.spring.beans.factory.config.BeanFactoryPostProcessor;
 import org.kee.spring.beans.factory.config.BeanPostProcessor;
 import org.kee.spring.context.ConfigurableApplicationContext;
 import org.kee.spring.context.event.*;
+import org.kee.spring.core.convert.ConversionService;
 import org.kee.spring.core.io.DefaultResourceLoader;
 
 import java.util.Collection;
@@ -55,12 +56,25 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader i
         // 7.注册事件监听器
         registerListeners();
 
-        // 8.提前实例化Bean对象
+        // 8.设置类型转换器、提前实例化Bean对象
         // ---- BeanFactory提供, DefaultListableBeanFactory 实现
-        beanFactory.preInstantiateSingletons();
+        finishBeanFactoryInitialization(beanFactory);
 
         // 9.发布容器刷新完成事件
         finishRefresh();
+    }
+
+    private void finishBeanFactoryInitialization(ConfigurableListableBeanFactory beanFactory) {
+        // 设置类型转换器
+        if (containsBean("conversionService")) {
+            Object conversionService = beanFactory.getBean("conversionService");
+            if (conversionService instanceof ConversionService) {
+                beanFactory.setConversionService((ConversionService) conversionService);
+            }
+        }
+
+        // 提前实例化Bean对象
+        beanFactory.preInstantiateSingletons();
     }
 
     private void initApplicationEventMulticaster() {
@@ -150,5 +164,10 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader i
     public void close() {
         publishEvent(new ContextClosedEvent(this));
         getBeanFactory().destroySingletons();
+    }
+
+    @Override
+    public boolean containsBean(String name) {
+        return getBeanFactory().containsBean(name);
     }
 }

@@ -2,16 +2,20 @@ package org.kee.spring.beans.factory.annotation;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.util.TypeUtil;
 import org.kee.spring.beans.BeansException;
 import org.kee.spring.beans.PropertyValues;
 import org.kee.spring.beans.factory.BeanFactory;
 import org.kee.spring.beans.factory.ConfigurableListableBeanFactory;
 import org.kee.spring.beans.factory.aware.BeanFactoryAware;
 import org.kee.spring.beans.factory.config.InstantiationAwareBeanPostProcessor;
+import org.kee.spring.core.convert.ConversionService;
 import org.kee.spring.util.ClassUtils;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.lang.reflect.Type;
+import java.util.Objects;
 
 /**
  * <p> 处理 @Value、@Autowired，注解的 BeanPostProcessor
@@ -49,9 +53,18 @@ public class AutowiredAnnotationBeanPostProcessor implements InstantiationAwareB
             Value valueAnno = field.getAnnotation(Value.class);
             if (null != valueAnno) {
                 // 获取 @Value中的占位符
-                String value = valueAnno.value();
+                Object value = valueAnno.value();
                 // 处理占位符替换为属性值
-                value = beanFactory.resolveEmbeddedValue(value);
+                value = beanFactory.resolveEmbeddedValue((String) value);
+
+                // 17-设置属性值时进行类型转换
+                Class<?> sourceType = value.getClass();
+                Class<?> targetType = (Class<?>) TypeUtil.getType(field);
+                ConversionService conversionService = beanFactory.getConversionService();
+                if (Objects.nonNull(conversionService) && conversionService.canConvert(sourceType, targetType)) {
+                    conversionService.convert(sourceType, targetType);
+                }
+
                 BeanUtil.setFieldValue(bean, field.getName(), value);
             }
         }
