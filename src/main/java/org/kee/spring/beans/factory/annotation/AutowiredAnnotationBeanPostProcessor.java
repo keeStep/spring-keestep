@@ -75,6 +75,7 @@ public class AutowiredAnnotationBeanPostProcessor implements InstantiationAwareB
 
                 // 设置属性值
                 // BUG：husband 注入 wife失败：cn.hutool.core.convert.ConvertException: Unsupported source type: class com.sun.proxy.$Proxy8
+                // 原因：jdk的代理对象在 Hutool的 BeanUtil.setFieldValue 时无法通过getClass拿到真正的目标类
                 // 解决：创建代理时从JDK代理改为Cglib代理：设置 advisedSupport.setProxyTargetClass(true)；
                 /**
                  * @see org.kee.spring.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator#wrapIfNecessary(Object, String)
@@ -109,7 +110,7 @@ public class AutowiredAnnotationBeanPostProcessor implements InstantiationAwareB
      */
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-        return null;
+        return bean;
     }
 
     /**
@@ -122,6 +123,6 @@ public class AutowiredAnnotationBeanPostProcessor implements InstantiationAwareB
      */
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-        return null;
+        return bean;
     }
 }
