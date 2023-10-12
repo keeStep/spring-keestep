@@ -112,7 +112,7 @@ public class DefaultAdvisorAutoProxyCreator implements BeanFactoryAware, Instant
             advisedSupport.setTargetSource(targetSource);
             advisedSupport.setMethodMatcher(advisor.getPointcut().getMethodMatcher());
             advisedSupport.setMethodInterceptor((MethodInterceptor) advisor.getAdvice());
-            // TODO 16 TELL ME WHY 从JDK代理改为Cglib代理??
+            // 16 TELL ME WHY 从JDK代理改为Cglib代理?? -- jdk的代理对象在 Hutool的 BeanUtil.setFieldValue 时无法通过getClass拿到真正的目标类
             advisedSupport.setProxyTargetClass(true);
 
             return new ProxyFactory(advisedSupport).getProxy();
