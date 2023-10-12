@@ -5,6 +5,7 @@ import org.kee.spring.beans.factory.FactoryBean;
 import org.kee.spring.beans.factory.config.BeanDefinition;
 import org.kee.spring.beans.factory.config.BeanPostProcessor;
 import org.kee.spring.beans.factory.config.ConfigurableBeanFactory;
+import org.kee.spring.core.convert.ConversionService;
 import org.kee.spring.util.ClassUtils;
 import org.kee.spring.util.StringValueResolver;
 
@@ -25,6 +26,15 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
     private final List<BeanPostProcessor> beanPostProcessors = new ArrayList<>();
 
     private final List<StringValueResolver> embeddedValueResolvers = new ArrayList<>();
+
+    private ConversionService conversionService;
+
+    @Override
+    public boolean containsBean(String name) {
+        return containsBeanDefinition(name);
+    }
+
+    protected abstract boolean containsBeanDefinition(String name);
 
     @Override
     public Object getBean(String name) throws BeansException {
@@ -132,5 +142,15 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
             result = valueResolver.resolveStringValue(result);
         }
         return result;
+    }
+
+    @Override
+    public void setConversionService(ConversionService conversionService) {
+        this.conversionService = conversionService;
+    }
+
+    @Override
+    public ConversionService getConversionService() {
+        return this.conversionService;
     }
 }

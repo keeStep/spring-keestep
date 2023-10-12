@@ -26,9 +26,7 @@ public class Cglib2AopProxy implements AopProxy {
     public Object getProxy() {
         Enhancer enhancer = new Enhancer();
 
-        Class<?> aClass = advisedSupport.getTargetSource().getTarget().getClass();
-        aClass = ClassUtils.isCglibProxyClass(aClass) ? aClass.getSuperclass() : aClass;
-        enhancer.setSuperclass(aClass);
+        enhancer.setSuperclass(ClassUtils.getActualClass(advisedSupport.getTargetSource().getTarget().getClass()));
         enhancer.setInterfaces(advisedSupport.getTargetSource().getTargetClass());
         // callback  加拦截器干啥？ -- Cglib的代理执行操作(这个是Cglib专有拦截器，看包名！)
         // 【可以对比JDK代理是实现了 InvocationHandler 的 invoke(), 而Cglib需要定义个拦截器来使用代理去执行】

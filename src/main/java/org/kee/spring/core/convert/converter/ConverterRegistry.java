@@ -1,4 +1,4 @@
-package org.kee.spring.core.convert;
+package org.kee.spring.core.convert.converter;
 
 /**
  * <p>类型转换注册接口

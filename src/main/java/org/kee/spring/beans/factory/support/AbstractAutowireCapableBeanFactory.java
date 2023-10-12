@@ -2,6 +2,7 @@ package org.kee.spring.beans.factory.support;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.util.TypeUtil;
 import org.kee.spring.beans.BeansException;
 import org.kee.spring.beans.PropertyValue;
 import org.kee.spring.beans.PropertyValues;
@@ -15,6 +16,7 @@ import org.kee.spring.beans.factory.config.*;
 import org.kee.spring.beans.factory.support.instantiation.CglibSubclassingInstantiationStrategy;
 import org.kee.spring.beans.factory.support.instantiation.InstantiationStrategy;
 import org.kee.spring.beans.factory.support.instantiation.SimpleInstantiationStrategy;
+import org.kee.spring.core.convert.ConversionService;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -35,7 +37,6 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         Object bean = null;
         try {
             // 0.代理对象（返回代理对象就不用Bean原始对象了）--> 迁移到初始化之后
-            // FIXME 16-不明白为何小傅哥还是把这个留着，代理对象的创建已经迁到初始化之后了厊
             /*bean = getBeanProxyIfNecessary(beanName, beanDefinition);
             if (Objects.nonNull(bean)) {
                 return bean;
@@ -132,7 +133,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
      * @param beanDefinition
      */
     protected void registerDisposableBeanIfNecessary(String beanName, Object bean, BeanDefinition beanDefinition) {
-        // 非 Singleton 类型的 Bean 对象不必执行销毁 TODO 为什么？
+        // 非 Singleton 类型的 Bean 对象不必执行销毁  为什么？-- 因为原型对象不会存储不用销毁
         if (!beanDefinition.isSingleton()) {
             return;
         }
@@ -226,6 +227,14 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
                 // 引用类型的属性值获取：getBean(beanName)
                 if (value instanceof BeanReference) {
                     value = getBean(((BeanReference) value).getBeanName());
+                } else {
+                    // 17-设置属性值时进行类型转换
+                    Class<?> sourceType = value.getClass();
+                    Class<?> targetType = (Class<?>) TypeUtil.getFieldType(bean.getClass(), beanName);
+                    ConversionService conversionService = this.getConversionService();
+                    if (Objects.nonNull(conversionService) && conversionService.canConvert(sourceType, targetType)) {
+                        conversionService.convert(sourceType, targetType);
+                    }
                 }
 
                 // 属性值填充：
@@ -236,7 +245,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
                 BeanUtil.setFieldValue(bean, name, value);
             }
         } catch (Exception e) {
-            throw new BeansException("Error setting property values: " + beanName);
+            throw new BeansException("Error setting property values: " + beanName + " message：" + e);
         }
 
     }
