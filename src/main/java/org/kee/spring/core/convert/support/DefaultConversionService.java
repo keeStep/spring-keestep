@@ -19,6 +19,6 @@ public class DefaultConversionService extends GenericConversionService {
     private void addDefaultConverters(ConverterRegistry converterRegistry) {
         // 添加各类型转换器工厂
         // ---这里先添加一个 string -》number
-        converterRegistry.addConverterFactory(new String2NumberConversionFactory());
+        converterRegistry.addConverterFactory(new String2NumberConverterFactory());
     }
 }
