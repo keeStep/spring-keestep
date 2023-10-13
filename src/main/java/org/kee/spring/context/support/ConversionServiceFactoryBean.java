@@ -5,6 +5,9 @@ import com.sun.istack.internal.Nullable;
 import org.kee.spring.beans.BeansException;
 import org.kee.spring.beans.factory.FactoryBean;
 import org.kee.spring.beans.factory.InitializingBean;
+import org.kee.spring.beans.factory.annotation.Autowired;
+import org.kee.spring.beans.factory.annotation.Qualifier;
+import org.kee.spring.context.annotation.Component;
 import org.kee.spring.core.convert.ConversionService;
 import org.kee.spring.core.convert.converter.Converter;
 import org.kee.spring.core.convert.converter.ConverterFactory;
@@ -20,9 +23,12 @@ import java.util.Set;
  * @author Eric
  * @date 2023/10/12 11:36 下午
  */
+@Component
 public class ConversionServiceFactoryBean implements FactoryBean<ConversionService>, InitializingBean {
 
     @Nullable
+    @Autowired
+    @Qualifier("converters")
     private Set<?> converters;
     @Nullable
     private GenericConversionService conversionService;

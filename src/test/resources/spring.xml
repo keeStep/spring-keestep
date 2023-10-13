@@ -6,7 +6,12 @@
 	         http://www.springframework.org/schema/beans/spring-beans.xsd
             http://www.springframework.org/schema/context ">
 
+    <bean id="husband" class="org.kee.spring.test.bean.Husband" >
+        <property name="wifeName" value="小韩寒"/>
+        <property name="marriageDate" value="2005-09-09"/>
+    </bean>
+
     <!--扫描注册bean包位置-->
-    <context:component-scan base-package="org.kee.spring.aop,org.kee.spring.test.bean"/>
+    <context:component-scan base-package="org.kee.spring.context.support,org.kee.spring.test.converter"/>
 
 </beans>

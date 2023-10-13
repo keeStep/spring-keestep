@@ -17,7 +17,7 @@ import java.lang.reflect.Method;
  * @author Eric
  * @date 2023/9/14 23:35
  */
-@Component("methodBeforeAdviceInterceptor")
+//@Component("methodBeforeAdviceInterceptor")
 public class MethodBeforeAdviceInterceptor implements MethodInterceptor {
 
     @Autowired

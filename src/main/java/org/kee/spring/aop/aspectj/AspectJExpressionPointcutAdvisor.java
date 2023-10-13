@@ -19,7 +19,7 @@ import java.util.Objects;
  * @author Eric
  * @date 2023/9/14 23:26
  */
-@Component
+//@Component
 public class AspectJExpressionPointcutAdvisor implements PointcutAdvisor {
 
     /**
