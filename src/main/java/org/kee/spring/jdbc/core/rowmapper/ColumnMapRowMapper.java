@@ -1,4 +1,4 @@
-package org.kee.spring.jdbc.rowmapper;
+package org.kee.spring.jdbc.core.rowmapper;
 
 import org.kee.spring.util.JdbcUtils;
 
