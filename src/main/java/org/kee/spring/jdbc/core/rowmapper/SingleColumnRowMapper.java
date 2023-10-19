@@ -1,7 +1,7 @@
 package org.kee.spring.jdbc.core.rowmapper;
 
 import org.kee.spring.jdbc.IncorrectResultSetColumnCountException;
-import org.kee.spring.util.JdbcUtils;
+import org.kee.spring.jdbc.support.JdbcUtils;
 import org.kee.spring.util.NumberUtils;
 
 import java.sql.ResultSet;
@@ -14,14 +14,14 @@ import java.sql.SQLException;
  * @author Eric
  * @date 2023/10/17 23:44
  */
-public class SimpleColumnRowMapper<T> implements RowMapper<T> {
+public class SingleColumnRowMapper<T> implements RowMapper<T> {
 
     private Class<?> requireType;
 
-    public SimpleColumnRowMapper() {
+    public SingleColumnRowMapper() {
     }
 
-    public SimpleColumnRowMapper(Class<?> requireType) {
+    public SingleColumnRowMapper(Class<?> requireType) {
         this.requireType = requireType;
     }
 

@@ -1,6 +1,6 @@
 package org.kee.spring.jdbc.core.rowmapper;
 
-import org.kee.spring.util.JdbcUtils;
+import org.kee.spring.jdbc.support.JdbcUtils;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;

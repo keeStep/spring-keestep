@@ -1,9 +1,10 @@
-package org.kee.spring.util;
+package org.kee.spring.jdbc.support;
 
 //import com.sun.org.slf4j.internal.Logger;
 //import com.sun.org.slf4j.internal.LoggerFactory;
 
 import cn.hutool.core.util.StrUtil;
+import org.kee.spring.util.NumberUtils;
 
 import java.math.BigDecimal;
 import java.sql.*;
