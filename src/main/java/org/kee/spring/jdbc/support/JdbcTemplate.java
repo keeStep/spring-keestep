@@ -130,7 +130,7 @@ public class JdbcTemplate extends JdbcAccessor implements JdbcOperations {
 
         return execute(psc, new PreparedStatementCallback<T>() {
             @Override
-            public T doInStatement(PreparedStatement ps) throws SQLException {
+            public T doInPreparedStatement(PreparedStatement ps) throws SQLException {
                 ResultSet rs = null;
                 try {
                     if (null != pss) {
@@ -304,7 +304,7 @@ public class JdbcTemplate extends JdbcAccessor implements JdbcOperations {
 
     @Override
     public <T> T queryForObject(String sql, Class<T> requiredType) {
-        return queryForObject(sql, new SingleColumnRowMapper<>(requiredType);
+        return queryForObject(sql, new SingleColumnRowMapper<>(requiredType));
     }
 
     @Override
