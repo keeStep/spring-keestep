@@ -23,6 +23,7 @@ public class ConnectionHolder {
     }
 
     public ConnectionHolder(Connection currentConnection) {
+        this.connectionHandle = new SimpleConnectionHandle(currentConnection);
         this.currentConnection = currentConnection;
     }
 

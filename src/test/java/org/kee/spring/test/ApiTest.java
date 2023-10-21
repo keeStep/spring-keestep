@@ -1,12 +1,15 @@
 package org.kee.spring.test;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.kee.spring.context.support.ClassPathXmlApplicationContext;
 import org.kee.spring.core.convert.converter.Converter;
 import org.kee.spring.core.convert.support.String2NumberConverterFactory;
+import org.kee.spring.jdbc.support.JdbcTemplate;
 import org.kee.spring.test.bean.Husband;
 import org.kee.spring.test.converter.String2IntegerConverter;
 
+import java.sql.SQLException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -15,31 +18,23 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class ApiTest {
 
-    private final static Map<String, Object> singletonObjects = new ConcurrentHashMap<>(100);
+    private JdbcTemplate jdbcTemplate;
 
-    @Test
-    public void testConverter() {
+    @Before
+    public void init() {
         ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring.xml");
-        Husband husband = applicationContext.getBean("husband", Husband.class);
-        System.out.println("testConverter: " + husband);
+        jdbcTemplate = applicationContext.getBean("jdbcTemplate", JdbcTemplate.class);
     }
 
-    @Test
-    public void testString2Integer() {
-        String2IntegerConverter converter = new String2IntegerConverter();
-        Integer integer = converter.convert("135");
-        System.out.println("String2IntegerConverter: " + integer);
-    }
 
     @Test
-    public void testStringToNumberConverterFactory() {
-        String2NumberConverterFactory converterFactory = new String2NumberConverterFactory();
-
-        Converter<String, Integer> integerConverter = converterFactory.getConverter(Integer.class);
-        Converter<String, Long> longConverter = converterFactory.getConverter(Long.class);
-
-        System.out.println("String2NumberConverterFactory#integerConverter: " + integerConverter.convert("3197"));
-        System.out.println("String2NumberConverterFactory#longConverter: " + longConverter.convert("1290"));
+    public void ddlTest() throws SQLException {
+        jdbcTemplate.execute(
+                "CREATE TABLE `city` (\n" +
+                "    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,\n" +
+                "    `city_name` varchar(100) DEFAULT NULL,\n" +
+                "    PRIMARY KEY (`id`)\n" +
+                ") ENGINE=InnoDB COMMENT '城市信息表'");
     }
 }
 

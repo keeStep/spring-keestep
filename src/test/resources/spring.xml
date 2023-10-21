@@ -13,5 +13,16 @@
 
     <!--扫描注册bean包位置-->
     <context:component-scan base-package="org.kee.spring.context.support,org.kee.spring.test.converter"/>
+    
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClass" value="com.mysql.cj.jdbc.Driver" />
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/spring?useSSL=false" />
+        <property name="username" value="root" />
+        <property name="password" value="123" />
+    </bean>
+    
+    <bean id="jdbcTemplate" class="org.kee.spring.jdbc.support.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
 
 </beans>
