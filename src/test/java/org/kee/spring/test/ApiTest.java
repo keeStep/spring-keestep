@@ -1,45 +1,77 @@
 package org.kee.spring.test;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.kee.spring.context.support.ClassPathXmlApplicationContext;
-import org.kee.spring.core.convert.converter.Converter;
-import org.kee.spring.core.convert.support.String2NumberConverterFactory;
-import org.kee.spring.test.bean.Husband;
-import org.kee.spring.test.converter.String2IntegerConverter;
+import org.kee.spring.jdbc.support.JdbcTemplate;
 
+import java.sql.ResultSet;
+import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Unit test for simple App.
  */
 public class ApiTest {
 
-    private final static Map<String, Object> singletonObjects = new ConcurrentHashMap<>(100);
+    private JdbcTemplate jdbcTemplate;
 
-    @Test
-    public void testConverter() {
+    @Before
+    public void init() {
         ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring.xml");
-        Husband husband = applicationContext.getBean("husband", Husband.class);
-        System.out.println("testConverter: " + husband);
+        jdbcTemplate = applicationContext.getBean("jdbcTemplate", JdbcTemplate.class);
     }
 
+
     @Test
-    public void testString2Integer() {
-        String2IntegerConverter converter = new String2IntegerConverter();
-        Integer integer = converter.convert("135");
-        System.out.println("String2IntegerConverter: " + integer);
+    public void ddlTest() {
+        jdbcTemplate.execute(
+                "CREATE TABLE `user` (\n" +
+                "    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,\n" +
+                "    `username` varchar(100) DEFAULT NULL,\n" +
+                "    `email` varchar(100) DEFAULT NULL,\n" +
+                "    PRIMARY KEY (`id`)\n" +
+                ") ENGINE=InnoDB COMMENT '城市信息表'");
     }
 
+
+    /**
+     * 遇到的bug在这： {@link org.kee.spring.jdbc.core.rowmapper.ColumnMapRowMapper#mapRow(ResultSet, int)}}
+     */
     @Test
-    public void testStringToNumberConverterFactory() {
-        String2NumberConverterFactory converterFactory = new String2NumberConverterFactory();
-
-        Converter<String, Integer> integerConverter = converterFactory.getConverter(Integer.class);
-        Converter<String, Long> longConverter = converterFactory.getConverter(Long.class);
-
-        System.out.println("String2NumberConverterFactory#integerConverter: " + integerConverter.convert("3197"));
-        System.out.println("String2NumberConverterFactory#longConverter: " + longConverter.convert("1290"));
+    public void queryForListTest() {
+        List<Map<String, Object>> maps = jdbcTemplate.queryForList("select * from user");
+        for (int i = 0; i < maps.size(); i++) {
+            System.out.printf("第%d行数据" + maps.get(i), i + 1);
+            System.out.println();
+        }
+    }
+    
+    @Test
+    public void queryForListWithColumnClassTypeTest() {
+        List<String> strings = jdbcTemplate.queryForList("select username from user", String.class);
+        for (int i = 0; i < strings.size(); i++) {
+            System.out.printf("第%d行数据" + strings.get(i), i + 1);
+            System.out.println();
+        }
+    }
+    
+    @Test
+    public void queryForListWithColumnClassTypeAndArgTest() {
+        List<String> strings = jdbcTemplate.queryForList("select username from user where id =?", String.class, 2);
+        for (int i = 0; i < strings.size(); i++) {
+            System.out.printf("第%d行数据" + strings.get(i), i + 1);
+            System.out.println();
+        }
+    }
+    
+    @Test
+    public void queryListWithArgTest() {
+        List<Map<String, Object>> maps = jdbcTemplate.queryForList("select * from user where id =?", 2);
+        for (int i = 0; i < maps.size(); i++) {
+            System.out.printf("第%d行数据" + maps.get(i), i + 1);
+            System.out.println();
+        }
     }
 }
 
