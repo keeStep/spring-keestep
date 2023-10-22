@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.kee.spring.context.support.ClassPathXmlApplicationContext;
 import org.kee.spring.jdbc.support.JdbcTemplate;
 
+import java.sql.ResultSet;
 import java.util.List;
 import java.util.Map;
 
@@ -31,14 +32,17 @@ public class ApiTest {
                 "    PRIMARY KEY (`id`)\n" +
                 ") ENGINE=InnoDB COMMENT '城市信息表'");
     }
-    
-    
+
+
+    /**
+     * 遇到的bug在这： {@link org.kee.spring.jdbc.core.rowmapper.ColumnMapRowMapper#mapRow(ResultSet, int)}}
+     */
     @Test
     public void queryForListTest() {
-        // FIXME
         List<Map<String, Object>> maps = jdbcTemplate.queryForList("select * from user");
         for (int i = 0; i < maps.size(); i++) {
             System.out.printf("第%d行数据" + maps.get(i), i + 1);
+            System.out.println();
         }
     }
     
@@ -62,10 +66,10 @@ public class ApiTest {
     
     @Test
     public void queryListWithArgTest() {
-        // FIXME
         List<Map<String, Object>> maps = jdbcTemplate.queryForList("select * from user where id =?", 2);
         for (int i = 0; i < maps.size(); i++) {
             System.out.printf("第%d行数据" + maps.get(i), i + 1);
+            System.out.println();
         }
     }
 }

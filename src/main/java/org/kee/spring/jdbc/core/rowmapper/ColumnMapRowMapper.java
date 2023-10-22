@@ -22,7 +22,11 @@ public class ColumnMapRowMapper implements RowMapper<Map<String, Object>> {
 
         Map<String, Object> mapOfColumnValues = new LinkedHashMap<>(columnCount);
         // 遍历获取每行列值
-        for (int i = 0; i < columnCount; i++) {
+        // -- 这里得从1开始遍历，因为：
+        // com.mysql.cj.jdbc.result.ResultSetMetaData.getField中
+        // 1.取的是 this.fields[columnIndex - 1]
+        // 2.代码判断了index小于1直接去抛异常了
+        for (int i = 1; i <= columnCount; i++) {
             // 1.列名（字段名）
             String columnName = JdbcUtils.lookupColumnName(metaData, i);
             // 2.列值（字段值）
