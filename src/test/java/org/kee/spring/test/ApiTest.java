@@ -26,9 +26,10 @@ public class ApiTest {
     @Test
     public void ddlTest() {
         jdbcTemplate.execute(
-                "CREATE TABLE `city` (\n" +
+                "CREATE TABLE `user` (\n" +
                 "    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,\n" +
-                "    `city_name` varchar(100) DEFAULT NULL,\n" +
+                "    `username` varchar(100) DEFAULT NULL,\n" +
+                "    `email` varchar(100) DEFAULT NULL,\n" +
                 "    PRIMARY KEY (`id`)\n" +
                 ") ENGINE=InnoDB COMMENT '城市信息表'");
     }
