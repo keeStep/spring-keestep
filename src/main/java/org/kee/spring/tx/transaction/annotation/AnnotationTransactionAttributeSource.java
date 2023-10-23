@@ -1,5 +1,8 @@
 package org.kee.spring.tx.transaction.annotation;
 
+import org.kee.spring.tx.transaction.interceptor.AbstractFallbackTransactionAttributeSource;
+import org.kee.spring.tx.transaction.interceptor.TransactionAttribute;
+
 import java.io.Serializable;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;

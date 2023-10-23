@@ -2,6 +2,8 @@ package org.kee.spring.tx.transaction.annotation;
 
 import org.kee.spring.core.annotation.AnnotatedElementUtils;
 import org.kee.spring.core.annotation.AnnotationAttributes;
+import org.kee.spring.tx.transaction.interceptor.RollbackRuleAttribute;
+import org.kee.spring.tx.transaction.interceptor.RuleBasedTransactionAttribute;
 import org.kee.spring.tx.transaction.interceptor.TransactionAttribute;
 
 import java.lang.reflect.AnnotatedElement;
