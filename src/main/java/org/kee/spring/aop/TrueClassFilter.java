@@ -8,7 +8,7 @@ package org.kee.spring.aop;
  */
 public class TrueClassFilter implements ClassFilter {
     
-    private static final TrueClassFilter INSTANCE = new TrueClassFilter();
+    public static final TrueClassFilter INSTANCE = new TrueClassFilter();
 
     public TrueClassFilter() {
     }

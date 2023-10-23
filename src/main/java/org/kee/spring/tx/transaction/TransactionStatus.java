@@ -9,7 +9,7 @@ import java.io.IOException;
  * @author Eric
  * @date 2023/10/23 23:57
  */
-public interface TransactionStatusextends extends SavepointManager, Flushable {
+public interface TransactionStatus extends SavepointManager, Flushable {
 
     /**
      * 是否开启新的事务
