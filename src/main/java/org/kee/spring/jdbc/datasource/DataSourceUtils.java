@@ -1,12 +1,14 @@
 package org.kee.spring.jdbc.datasource;
 
 import org.kee.spring.jdbc.CannotGetJdbcConnectionException;
+import org.kee.spring.tx.transaction.support.TransactionSynchronizationManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Objects;
 
 /**
  * <p>数据源链接操作工具类
@@ -29,9 +31,14 @@ public abstract class DataSourceUtils {
 
 
     public static Connection doGetConnection(DataSource dataSource) throws SQLException {
-        Connection connection = fetchConnection(dataSource);
-        ConnectionHolder connectionHolder = new ConnectionHolder(connection);
-        return connectionHolder.getConnection();
+        // 事务操作时，数据库链接保存在线程共享的管理器中（ThreadLocal），需从管理器获取，保证事务执行
+        ConnectionHolder conHolder = (ConnectionHolder) TransactionSynchronizationManager.getResource(dataSource);
+        
+        if (Objects.nonNull(conHolder) && conHolder.hasConnection()) {
+            return conHolder.getConnection();
+        }
+        
+        return fetchConnection(dataSource);
     }
 
 
