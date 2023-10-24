@@ -14,5 +14,5 @@ public interface InitializingBean {
      * 在bean对象属性填充完成后调用
      * @throws BeansException
      */
-    void afterPropertiesSet() throws BeansException;
+    void afterPropertiesSet() throws Exception;
 }

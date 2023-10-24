@@ -49,7 +49,7 @@ public class ConversionServiceFactoryBean implements FactoryBean<ConversionServi
     }
 
     @Override
-    public void afterPropertiesSet() throws BeansException {
+    public void afterPropertiesSet() throws Exception {
         this.conversionService = new DefaultConversionService();
         // 注册类型转换器 及类型转换工厂
         registerConverters();

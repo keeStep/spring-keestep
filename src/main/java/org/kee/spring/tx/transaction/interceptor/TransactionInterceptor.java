@@ -1,8 +1,8 @@
 package org.kee.spring.tx.transaction.interceptor;
 
-import cn.bugstack.springframework.tx.transaction.PlatformTransactionManager;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
+import org.kee.spring.tx.transaction.PlatformTransactionManager;
 
 import java.io.Serializable;
 
