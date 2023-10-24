@@ -12,6 +12,7 @@ import java.util.Map;
  * <p>对某行数据，把字段值挨个放到map
  *
  * @author Eric
+ * 
  * @date 2023/10/18 0:08
  */
 public class ColumnMapRowMapper implements RowMapper<Map<String, Object>> {

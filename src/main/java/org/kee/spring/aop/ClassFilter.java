@@ -14,4 +14,6 @@ public interface ClassFilter {
      * @return
      */
     boolean matches(Class<?> clazz);
+
+    ClassFilter TRUE = TrueClassFilter.INSTANCE;
 }
