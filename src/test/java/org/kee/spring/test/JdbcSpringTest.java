@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * Unit test for simple App.
  */
-public class ApiTest {
+public class JdbcSpringTest {
 
     private JdbcTemplate jdbcTemplate;
 

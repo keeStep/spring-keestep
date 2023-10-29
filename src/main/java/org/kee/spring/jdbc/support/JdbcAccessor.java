@@ -45,7 +45,7 @@ public abstract class JdbcAccessor implements InitializingBean {
      * @throws BeansException
      */
     @Override
-    public void afterPropertiesSet() throws Exception {
+    public void afterPropertiesSet() {
         if (null == getDataSource()) {
             throw new IllegalArgumentException("Property 'dataSource' is required");
         }

@@ -24,5 +24,7 @@
     <bean id="jdbcTemplate" class="org.kee.spring.jdbc.support.JdbcTemplate">
         <property name="dataSource" ref="dataSource"/>
     </bean>
+    
+    <bean id="jdbcService" class="org.kee.spring.test.service.JdbcService" />
 
 </beans>
